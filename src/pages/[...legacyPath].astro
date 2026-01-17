@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+
+  const paths: Array<{ params: { legacyPath: string }, props: { newSlug: string } }> = [];
+
+  for (const post of posts) {
+    if (post.data.legacySlug) {
+      // URL-encoded版とデコード版の両方を生成
+      const encodedPath = post.data.legacySlug;
+      const decodedPath = decodeURIComponent(encodedPath);
+
+      paths.push({
+        params: { legacyPath: encodedPath },
+        props: { newSlug: post.slug },
+      });
+
+      // エンコード版とデコード版が異なる場合のみ、デコード版も追加
+      if (encodedPath !== decodedPath) {
+        paths.push({
+          params: { legacyPath: decodedPath },
+          props: { newSlug: post.slug },
+        });
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { newSlug } = Astro.props;
+
+// 新しいURLにリダイレクト
+return Astro.redirect(`/blog/${newSlug}/`, 301);
+---

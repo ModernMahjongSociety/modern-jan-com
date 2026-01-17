@@ -1,0 +1,75 @@
+---
+interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+{toc.length > 0 && (
+  <nav class="toc">
+    <details open>
+      <summary>目次</summary>
+      <ul>
+        {toc.map((heading) => (
+          <li style={`margin-left: ${(heading.depth - 2) * 16}px`}>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ul>
+    </details>
+  </nav>
+)}
+
+<style>
+  .toc {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 24px 0;
+  }
+
+  summary {
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--color-text-primary);
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::before {
+    content: '▼ ';
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
+  }
+
+  details[open] summary::before {
+    content: '▲ ';
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0 0;
+  }
+
+  li {
+    margin: 8px 0;
+  }
+
+  a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.15s ease;
+  }
+
+  a:hover {
+    color: var(--color-accent);
+  }
+</style>

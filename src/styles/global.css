@@ -1,0 +1,104 @@
+/* パターンC: バランス型デザイン（既存ブランドカラー + catnose風ミニマル） */
+
+:root {
+  /* ブランドカラー（ヘッダー・フッターのみ使用） */
+  --color-primary: #14274E;
+  --color-primary-light: #394867;
+
+  /* ベースカラー */
+  --color-bg: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+
+  /* テキスト */
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-tertiary: #94a3b8;
+
+  /* アクセント */
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+
+  /* 麻雀テーマ（装飾的に使用） */
+  --color-mahjong-green: #1a472a;
+
+  /* ボーダー */
+  --color-border: #e2e8f0;
+  --color-border-light: #f1f5f9;
+
+  /* シャドウ */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* リセットCSS */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP',
+               'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+/* リンク */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* 選択時 */
+::selection {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+/* ボタン */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* 画像 */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* メインコンテンツ */
+main {
+  min-height: calc(100vh - 64px - 200px); /* header + footer の高さを引く */
+}
+
+/* ユーティリティクラス */
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+}

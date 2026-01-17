@@ -6,9 +6,30 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "extract:images": "bun run scripts/extract-referenced-images.ts",
+    "upload:images": "dotenvx run -- bun run scripts/optimize-and-upload-images.ts",
+    "upload:images:dry": "dotenvx run -- bun run scripts/optimize-and-upload-images.ts --dry-run",
+    "upload:images:no-convert": "dotenvx run -- bun run scripts/optimize-and-upload-images.ts --skip-conversion",
+    "setup:r2-domain": "dotenvx run -- bun run scripts/setup-r2-custom-domain.ts"
   },
   "dependencies": {
-    "astro": "^5.16.10"
+    "@astrojs/cloudflare": "^12.6.12",
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/sitemap": "^3.7.0",
+    "astro": "^5.16.10",
+    "mj-tiles": "^0.1.0",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-slug": "^6.0.0"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-s3": "^3.970.0",
+    "@dotenvx/dotenvx": "^1.51.4",
+    "@types/turndown": "^5.0.6",
+    "@types/xml2js": "^0.4.14",
+    "sharp": "^0.34.5",
+    "tsx": "^4.21.0",
+    "turndown": "^7.2.2",
+    "xml2js": "^0.6.2"
   }
 }

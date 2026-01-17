@@ -1,16 +1,175 @@
 ---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PostCard from '../components/PostCard.astro';
 
+// 最新5件の記事を取得
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const recentPosts = allPosts
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
+  .slice(0, 5);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="ホーム" description="麻雀の戦術・技術について研究するサークル">
+  <Header />
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1 class="hero-title">モダンジャン研究会</h1>
+        <p class="hero-description">
+          麻雀の戦術・技術について研究するサークル
+        </p>
+        <div class="hero-links">
+          <a href="/blog/" class="hero-button primary">記事一覧</a>
+          <a href="/about/" class="hero-button secondary">団体概要</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="recent-posts">
+      <div class="container">
+        <h2 class="section-title">最新記事</h2>
+        <div class="posts-list">
+          {recentPosts.map(post => (
+            <PostCard post={post} />
+          ))}
+        </div>
+        <div class="view-all">
+          <a href="/blog/" class="view-all-link">すべての記事を見る →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: white;
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .hero-inner {
+    max-width: 768px;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .hero-description {
+    font-size: 1.125rem;
+    margin-bottom: 32px;
+    opacity: 0.95;
+  }
+
+  .hero-links {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .hero-button {
+    padding: 12px 32px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+  }
+
+  .hero-button.primary {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .hero-button.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .hero-button.secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+  }
+
+  .hero-button.secondary:hover {
+    background: white;
+    color: var(--color-primary);
+  }
+
+  .recent-posts {
+    padding: 64px 0;
+  }
+
+  .section-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: var(--color-text-primary);
+  }
+
+  .posts-list {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .view-all {
+    margin-top: 32px;
+    text-align: center;
+  }
+
+  .view-all-link {
+    color: var(--color-accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .view-all-link:hover {
+    color: var(--color-accent-hover);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 60px 24px;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-description {
+      font-size: 1rem;
+    }
+
+    .hero-links {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-button {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .recent-posts {
+      padding: 48px 0;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>

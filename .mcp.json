@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "kbkn-mcp": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://kbkn-mcp.ken0421wabu.workers.dev/mcp",
+        "--transport",
+        "sse"
+      ]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["chrome-devtools-mcp@latest"]
+    },
+    "cloudflare-observability": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://observability.mcp.cloudflare.com/mcp"]
+    }
+  }
+}

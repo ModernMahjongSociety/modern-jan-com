@@ -1,0 +1,54 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
+const siteTitle = 'モダンジャン研究会';
+const fullTitle = `${title} | ${siteTitle}`;
+
+// デフォルトOGP画像（外部API使用）
+const OGP_API_BASE = import.meta.env.PUBLIC_OGP_API_BASE || 'https://ogp-image-creator.ken0421wabu.workers.dev';
+const defaultOgImage = `${OGP_API_BASE}/gensya?${new URLSearchParams({
+  title: siteTitle,
+  subTitle: '麻雀研究',
+  siteTitle: siteTitle,
+}).toString()}`;
+
+const ogImageUrl = ogImage || defaultOgImage;
+const descriptionContent = description || '麻雀の戦術・技術について研究するサークル';
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={descriptionContent} />
+
+  <!-- OGP -->
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={descriptionContent} />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={siteTitle} />
+  <meta property="og:url" content={Astro.url.href} />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={descriptionContent} />
+  <meta name="twitter:image" content={ogImageUrl} />
+
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+</head>
+<body>
+  <slot />
+</body>
+</html>

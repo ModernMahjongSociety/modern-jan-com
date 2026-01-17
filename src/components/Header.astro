@@ -1,0 +1,114 @@
+---
+const navItems = [
+  { href: '/', label: 'ホーム' },
+  { href: '/blog/', label: '記事一覧' },
+  { href: '/about/', label: '団体概要' },
+  { href: '/member/', label: '会員紹介' },
+  { href: '/tutorial/', label: '麻雀教則動画' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      モダンジャン研究会
+    </a>
+    <nav class="nav">
+      {navItems.map(item => (
+        <a
+          href={item.href}
+          class:list={['nav-link', { 'active': currentPath === item.href }]}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    background: var(--color-primary);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .header-inner {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .logo:hover {
+    opacity: 0.8;
+  }
+
+  .nav {
+    display: flex;
+    gap: 24px;
+  }
+
+  .nav-link {
+    font-size: 0.875rem;
+    color: white;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: opacity 0.15s ease;
+    padding: 4px 0;
+  }
+
+  .nav-link:hover {
+    opacity: 1;
+  }
+
+  .nav-link.active {
+    opacity: 1;
+    border-bottom: 2px solid white;
+  }
+
+  @media (max-width: 768px) {
+    .header-inner {
+      padding: 0 16px;
+      height: 56px;
+    }
+
+    .logo {
+      font-size: 1rem;
+    }
+
+    .nav {
+      gap: 16px;
+    }
+
+    .nav-link {
+      font-size: 0.8125rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .nav {
+      gap: 12px;
+    }
+
+    .nav-link {
+      font-size: 0.75rem;
+    }
+  }
+</style>

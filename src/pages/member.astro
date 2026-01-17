@@ -1,0 +1,149 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout title="会員紹介" description="モダンジャン研究会のメンバー紹介">
+  <div class="members">
+    <section class="member">
+      <div class="member-photo">
+        <img src="https://r2.modern-jan.com/members/kobaken.avif" alt="こばけん" />
+      </div>
+      <div class="member-info">
+        <h2>こばけん</h2>
+        <p class="role">会長</p>
+        <div class="profile">
+          <h3>プロフィール</h3>
+          <p>
+            モダンジャン研究会を創設。麻雀AIの研究と、麻雀戦術の普及活動を行っている。
+          </p>
+          <p>
+            主な実績：雀魂用NAGA/Mortal牌譜検討拡張機能の開発、麻雀AI LuckyJの日本語訳など。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="member">
+      <div class="member-photo">
+        <img src="https://r2.modern-jan.com/members/takano.avif" alt="バーニング高野" />
+      </div>
+      <div class="member-info">
+        <h2>バーニング高野</h2>
+        <p class="role">理事</p>
+        <div class="profile">
+          <h3>プロフィール</h3>
+          <p>
+            麻雀、酒、野球、馬を愛する。爵王戦初代王者。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="member">
+      <div class="member-photo">
+        <img src="https://r2.modern-jan.com/members/tamaba.avif" alt="たまば" />
+      </div>
+      <div class="member-info">
+        <h2>たまば</h2>
+        <p class="role">顧問</p>
+        <div class="profile">
+          <h3>プロフィール</h3>
+          <p>
+            デザイナー。サイトデザインやロゴ制作を担当。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="member">
+      <div class="member-photo">
+        <img src="https://r2.modern-jan.com/members/koyayakko.avif" alt="コヤヤッコ" />
+      </div>
+      <div class="member-info">
+        <h2>コヤヤッコ</h2>
+        <p class="role">顧問</p>
+        <div class="profile">
+          <h3>プロフィール</h3>
+          <p>
+            セレブ打法の使い手。
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</PageLayout>
+
+<style>
+  .members {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .member {
+    display: flex;
+    gap: 32px;
+    padding: 32px;
+    background: var(--color-bg-secondary);
+    border-radius: 8px;
+    align-items: flex-start;
+  }
+
+  .member-photo {
+    flex-shrink: 0;
+  }
+
+  .member-photo img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid var(--color-border);
+  }
+
+  .member-info {
+    flex: 1;
+  }
+
+  .member h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--color-text-primary);
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .role {
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .profile h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--color-text-secondary);
+  }
+
+  .profile p {
+    margin: 8px 0;
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    .member {
+      flex-direction: column;
+      gap: 20px;
+      padding: 24px;
+    }
+
+    .member-photo img {
+      width: 120px;
+      height: 120px;
+    }
+  }
+</style>

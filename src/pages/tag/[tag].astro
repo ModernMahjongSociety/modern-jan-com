@@ -1,0 +1,87 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PostCard from '../../components/PostCard.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+
+  return tags.map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts
+        .filter((post) => post.data.tags.includes(tag))
+        .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+
+const breadcrumbItems = [
+  { label: 'ホーム', href: '/' },
+  { label: '記事一覧', href: '/blog/' },
+  { label: `タグ: ${tag}`, href: '' },
+];
+---
+
+<BaseLayout title={`${tag} の記事一覧`} description={`${tag}に関する記事一覧`}>
+  <Header />
+  <main>
+    <div class="tag-page">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <h1>
+        <span class="label">タグ:</span>
+        {tag}
+      </h1>
+      <p class="count">{posts.length}件の記事</p>
+
+      <div class="posts-list">
+        {posts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .tag-page {
+    max-width: 896px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--color-text-primary);
+  }
+
+  .label {
+    color: var(--color-text-tertiary);
+    font-weight: 400;
+    font-size: 1.125rem;
+  }
+
+  .count {
+    color: var(--color-text-tertiary);
+    margin-bottom: 32px;
+    font-size: 0.875rem;
+  }
+
+  .posts-list {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+</style>

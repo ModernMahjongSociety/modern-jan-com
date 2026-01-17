@@ -1,0 +1,109 @@
+---
+interface Props {
+  title: string;
+  url: string;
+}
+
+const { title, url } = Astro.props;
+
+// URLエンコード
+const encodedTitle = encodeURIComponent(title);
+const encodedUrl = encodeURIComponent(url);
+
+// シェアURL生成
+const shareUrls = {
+  twitter: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
+  facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+  hatena: `https://b.hatena.ne.jp/add?url=${encodedUrl}&title=${encodedTitle}`,
+};
+---
+
+<div class="social-share">
+  <p class="share-label">この記事をシェア</p>
+  <div class="share-buttons">
+    <a
+      href={shareUrls.twitter}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="share-button twitter"
+      aria-label="Xでシェア"
+    >
+      X
+    </a>
+    <a
+      href={shareUrls.facebook}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="share-button facebook"
+      aria-label="Facebookでシェア"
+    >
+      Facebook
+    </a>
+    <a
+      href={shareUrls.hatena}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="share-button hatena"
+      aria-label="はてなブックマークに追加"
+    >
+      はてブ
+    </a>
+  </div>
+</div>
+
+<style>
+  .social-share {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .share-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 12px;
+  }
+
+  .share-buttons {
+    display: flex;
+    gap: 12px;
+  }
+
+  .share-button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: white;
+    transition: opacity 0.15s ease;
+  }
+
+  .share-button:hover {
+    opacity: 0.8;
+  }
+
+  .twitter {
+    background: #1da1f2;
+  }
+
+  .facebook {
+    background: #1877f2;
+  }
+
+  .hatena {
+    background: #00a4de;
+  }
+
+  @media (max-width: 640px) {
+    .share-buttons {
+      flex-wrap: wrap;
+    }
+
+    .share-button {
+      padding: 6px 12px;
+      font-size: 0.8125rem;
+    }
+  }
+</style>

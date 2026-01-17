@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PostCard from '../../components/PostCard.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+// 日付降順でソート
+const posts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+
+const breadcrumbItems = [
+  { label: 'ホーム', href: '/' },
+  { label: '記事一覧', href: '' },
+];
+---
+
+<BaseLayout title="記事一覧" description="モダンジャン研究会の全記事一覧">
+  <Header />
+  <main>
+    <div class="blog-page">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <h1>記事一覧</h1>
+      <p class="count">{posts.length}件の記事</p>
+
+      <div class="posts-list">
+        {posts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .blog-page {
+    max-width: 896px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--color-text-primary);
+  }
+
+  .count {
+    color: var(--color-text-tertiary);
+    margin-bottom: 32px;
+    font-size: 0.875rem;
+  }
+
+  .posts-list {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+</style>

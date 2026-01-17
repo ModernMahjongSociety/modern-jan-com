@@ -1,0 +1,115 @@
+---
+title: "雀魂でもNAGA/Mortalでワンクリック牌譜検討！拡張機能リリースしました。"
+publishedAt: 2022-07-19
+tags: ["akochan", "extension", "Mahjong Soul", "mjai-reviewer", "Mortal", "NAGA", "拡張機能", "雀魂", "麻雀"]
+category: "お知らせ"
+legacySlug: "2022/07/19/mjrs"
+draft: false
+---
+
+## リリースのお知らせ
+
+雀魂でもNAGAで牌譜検討したい。そんな麻雀オタクに朗報です。
+
+NAGAに直接牌譜データを送信できるブラウザ拡張機能を制作、リリースしました。
+
+![](https://r2.modern-jan.com/2022/07/Animation.avif)
+
+利用できる機能は、
+
+*   NAGAへ局単位で転送
+*   [mjai-reviewer](https://mjai.ekyu.moe/)へ半荘単位で転送
+
+となっています。
+
+### mjai-reviewerとは
+
+[critter氏](https://twitter.com/critter_eng)が2019年に開発した天鳳7-9段相当のAkochanという麻雀AIがあります。
+
+これを利用した牌譜検討サービス「Akochan Reviewer」を提供していた[**Equim**](https://github.com/Equim-chan)氏が、2022年に新たに自作のAI「Mortal」と共に公開した牌譜検討サービスです。
+
+雀魂・天鳳の牌譜検討に対応しています。→[mjai-reviewerリンク](https://mjai.ekyu.moe/)
+
+## インストール
+
+Google Chrome：[雀魂牌譜検討サポーター | Chromeウェブストア](https://chrome.google.com/webstore/detail/mahjongsoul-review-suppor/kdmfnkdgpialmejpgflfllkjakolamcc)　
+
+Microsoft Edge：[雀魂配布検討サポーター - Microsoft Edge Addons](https://microsoftedge.microsoft.com/addons/detail/jopdfhmfehndjpnjjidmkkmjmkaebodb)
+
+Firefoxは拡張機能の仕様がChrome/Edgeに追いついたら公開しようと思っています。
+
+## 使い方
+
+1.インストール（上記）  
+　言語設定が画表示されるので確認の上「セット」をクリックします。
+
+![](https://r2.modern-jan.com/2022/07/image-10.avif)
+
+2.ツールバーに固定する。
+
+![](https://r2.modern-jan.com/2022/07/拡張機能解説-1024x538.avif)
+
+3.雀魂の検討したい牌譜を開く
+
+4.(NAGAの場合)検討したい局を選択し、送信します。送信ボタンの横に消費するポイントが表示されるので確認しましょう。  
+この拡張機能を利用するのは無料ですが、NAGA自体はニコニコ有料チャンネルのサービスなので注意してください。
+
+5.(NAGAの場合)画面遷移するとテキストボックスに牌譜が局数分書き込まれるので、解析ボタンを押します。  
+解析ボタンの局数は1局のままですが、ポイントは局数分消費します。
+
+![](https://r2.modern-jan.com/2022/07/Animation.avif)
+
+4.(mjai-reviewerの場合)get!を押すと参加者の名前が表示されます。あなたの名前を選ぶとmjai-reviewerに遷移して牌譜URLと席順の番号が書き込まれます。  
+hCaptchaで人間であることを示してからsubmit（送信）しましょう。
+
+## Special Thanks
+
+### Equim氏
+
+[Twitter](https://twitter.com/equim_chan)、[mjai-reviewer](https://mjai.ekyu.moe/)、[Github](https://github.com/Equim-chan)
+
+この拡張機能ではEquim氏が公開していた雀魂牌譜をAkochan Reviewer用に変換するためのコード(Apache v2.0)を利用させていただいています。  
+またMortalという素晴らしいAIやAkochan Reviewerに引き続きmjai-reviewerという解析ツールを提供し、麻雀界に多大な貢献をされています。  
+そんなEquim氏への寄付は[こちら](https://mortal.ekyu.moe/donate.html)から（仮想通貨の送金及び天鳳有料会員ギフト）
+
+### Critter氏
+
+[HP](https://t.co/R0DTnInji0)、[Twitter](https://twitter.com/critter_Eng)、[Github](https://github.com/critter-mj)
+
+Akochanという麻雀AIを開発し、Githubで公開することで麻雀の知見を得るためのツールを提供している方です。[麻雀順位予想計算機](http://critter.sakura.ne.jp/jun_keisan.html)の開発者でもあるようです。
+
+### EDWARTH氏
+
+[Twitter](https://twitter.com/EDWARDH_Jantama)
+
+あの[雀魂牌譜屋](https://saki.sapk.ch/)やmjai-reviewerのサーバーを技術的に支えている方です。感謝…！
+
+### NAGAたん
+
+可愛くて強い。擬人化バージョンもいいですよね。[サイトリンク](https://naga.dmv.nico/naga_report/top/)
+
+## 規約等について
+
+雀魂に定められた利用規約には以下の文章があります。
+
+> 第11条　禁止事項
+> 
+> ユーザーは、本サービスの利用にあたり、以下に該当する行為及びそのおそれのある行為を行なってはなりません
+> 
+> （14）不正アクセス行為の防止等に関する法律に違反する行為、電子計算機損壊等業務妨害罪（刑法（明治40年法律第45号）第234条の2）に該当する行為をはじめ、当社及び他人のコンピューターに対して違法又は不正な操作を行う行為
+> 
+> 雀魂利用規約
+
+これについては本拡張機能で使用している牌譜取得スクリプトはブラウザ上で稼働しているゲームに対して作用しており、雀魂のサーバーに対してリクエストを送信していないと解釈しています。よって利用規約には違反していないという前提でリリースしておりますが、万が一雀魂サーバーにリクエストがなされている場合、短時間に大量の利用をするとbotの判定を受ける恐れがあります。
+
+上記の内容含め、この拡張機能を利用した場合になんらかの不利益を被っても当方は一切の責任を負いません。(趣味の開発ですのでご理解ください！)
+
+## まとめ
+
+雀魂から簡単にNAGA/mjai-reviewerを利用できる拡張機能を公開しました。
+
+今後も様々な麻雀ツールを公開していきますので、モダンジャン研究会のエンジニアをよろしくお願いします。
+
+改善要望や[Github](https://github.com/kbkn3/MahjongSoul-review-supporter)へのPull Request、issue投げも歓迎します。
+
+こばけん　[Twitter](https://twitter.com/kbkn3)
