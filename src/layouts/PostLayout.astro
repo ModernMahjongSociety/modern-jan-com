@@ -26,15 +26,10 @@ interface Props {
 const { post, headings } = Astro.props;
 const { title, description, publishedAt, updatedAt, tags, image } = post.data;
 
-// OGP画像URL（外部API使用）
-const OGP_API_BASE = import.meta.env.PUBLIC_OGP_API_BASE || 'https://ogp-image-creator.ken0421wabu.workers.dev';
+// OGP画像URL（SSG生成）
 const ogImageUrl = image
   ? image
-  : `${OGP_API_BASE}/gensya?${new URLSearchParams({
-      title: title,
-      subTitle: tags[0] || '',
-      siteTitle: 'モダンジャン研究会',
-    }).toString()}`;
+  : `${Astro.site}ogp/${post.slug}.png`;
 
 const breadcrumbItems = [
   { label: 'ホーム', href: '/' },

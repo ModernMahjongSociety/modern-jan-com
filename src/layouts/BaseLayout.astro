@@ -11,13 +11,8 @@ const { title, description, ogImage } = Astro.props;
 const siteTitle = 'モダンジャン研究会';
 const fullTitle = `${title} | ${siteTitle}`;
 
-// デフォルトOGP画像（外部API使用）
-const OGP_API_BASE = import.meta.env.PUBLIC_OGP_API_BASE || 'https://ogp-image-creator.ken0421wabu.workers.dev';
-const defaultOgImage = `${OGP_API_BASE}/gensya?${new URLSearchParams({
-  title: siteTitle,
-  subTitle: '麻雀研究',
-  siteTitle: siteTitle,
-}).toString()}`;
+// デフォルトOGP画像（SSG生成）
+const defaultOgImage = `${Astro.site}ogp/default.png`;
 
 const ogImageUrl = ogImage || defaultOgImage;
 const descriptionContent = description || '麻雀の戦術・技術について研究するサークル';
