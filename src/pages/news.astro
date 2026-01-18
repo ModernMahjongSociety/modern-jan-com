@@ -1,0 +1,63 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+// お知らせタグの記事を取得
+const posts = await getCollection('blog');
+const newsPosts = posts.filter(post =>
+  post.data.tags?.includes('お知らせ')
+).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// お知らせタグがない場合は最新記事を表示
+const displayPosts = newsPosts.length > 0 ? newsPosts : posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<PageLayout title="お知らせ" description="モダンジャン研究会からのお知らせ">
+  <section>
+    <h2>お知らせ</h2>
+    <p>
+      モダンジャン研究会からの最新情報とお知らせです。
+    </p>
+  </section>
+
+  <section>
+    <h3>最新のお知らせ</h3>
+    {displayPosts.length > 0 ? (
+      <ul>
+        {displayPosts.map(post => (
+          <li>
+            <a href={`/blog/${post.slug}/`}>
+              {post.data.title}
+            </a>
+            {' - '}
+            <time>{post.data.pubDate.toLocaleDateString('ja-JP')}</time>
+            {post.data.description && (
+              <p>{post.data.description}</p>
+            )}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>現在お知らせはありません。</p>
+    )}
+  </section>
+
+  <section>
+    <h3>主な活動</h3>
+    <ul>
+      <li>爵王戦などのタイトル戦の開催</li>
+      <li>麻雀AI（Lucky J、NAGA、Suphx）の研究と比較分析</li>
+      <li>戦術記事の公開</li>
+      <li>動画講座の提供</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>関連リンク</h3>
+    <ul>
+      <li><a href="/blog/">ブログ記事一覧</a></li>
+      <li><a href="/title/">タイトル戦情報</a></li>
+      <li><a href="/about/">団体概要</a></li>
+    </ul>
+  </section>
+</PageLayout>

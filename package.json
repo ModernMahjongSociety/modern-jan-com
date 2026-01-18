@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "bun run generate:ogp && astro build",
+    "build": "bun run generate:ogp && astro build && cp dist/sitemap-index.xml dist/sitemap.xml",
     "preview": "astro preview",
     "astro": "astro",
     "generate:ogp": "tsx scripts/generate-og-images.ts",

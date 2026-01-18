@@ -11,7 +11,16 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 export default defineConfig({
   site: 'https://modern-jan.com',
   output: 'static',
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    routes: {
+      extend: {
+        exclude: [
+          { pattern: '/sitemap.xml' },
+          { pattern: '/sitemap-*.xml' },
+        ],
+      },
+    },
+  }),
   integrations: [mdx(), sitemap()],
   markdown: {
     rehypePlugins: [

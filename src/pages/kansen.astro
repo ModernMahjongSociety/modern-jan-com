@@ -1,0 +1,60 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+// 観戦記タグの記事を取得
+const posts = await getCollection('blog');
+const kansenPosts = posts.filter(post =>
+  post.data.tags?.includes('大会') ||
+  post.data.tags?.includes('戦略') ||
+  post.data.tags?.includes('戦術')
+).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<PageLayout title="観戦記" description="大会観戦レポートとアーカイブ">
+  <section>
+    <h2>観戦記</h2>
+    <p>
+      モダンジャン研究会の大会観戦レポートのアーカイブです。
+      トーナメント試合のレポートと分析を掲載しています。
+    </p>
+  </section>
+
+  <section>
+    <h3>主な観戦記</h3>
+    <p>
+      第一期爵王戦の観戦記など、様々な大会のレポートを掲載しています。
+    </p>
+    <ul>
+      <li>「第1期爵王位決定戦終幕」（2021年10月28日） - 初代王者決定戦の報告</li>
+      <li>「セレブ打法コヤヤッコが遂に会心の和了でトップ奪取」（2021年10月23日） - 第8戦のプレイヤーパフォーマンスハイライト</li>
+      <li>「微差のオーラスで覚悟の裸単騎」（2021年10月13日） - 第3戦の戦略的プレイ分析</li>
+      <li>「全20半荘で争う新リーグ開幕」（2021年10月7日） - 初戦レポート</li>
+    </ul>
+  </section>
+
+  {kansenPosts.length > 0 && (
+    <section>
+      <h3>関連ブログ記事</h3>
+      <ul>
+        {kansenPosts.slice(0, 10).map(post => (
+          <li>
+            <a href={`/blog/${post.slug}/`}>
+              {post.data.title}
+            </a>
+            {' - '}
+            <time>{post.data.pubDate.toLocaleDateString('ja-JP')}</time>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section>
+    <h3>関連リンク</h3>
+    <ul>
+      <li><a href="/title/">タイトル戦一覧</a></li>
+      <li><a href="/blog/">ブログ記事一覧</a></li>
+    </ul>
+  </section>
+</PageLayout>
