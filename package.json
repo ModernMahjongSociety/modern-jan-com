@@ -12,6 +12,8 @@
     "upload:images": "dotenvx run -- bun run scripts/optimize-and-upload-images.ts",
     "upload:images:dry": "dotenvx run -- bun run scripts/optimize-and-upload-images.ts --dry-run",
     "upload:images:no-convert": "dotenvx run -- bun run scripts/optimize-and-upload-images.ts --skip-conversion",
+    "upload:thumbnails": "dotenvx run -- tsx scripts/upload-thumbnails.ts",
+    "upload:thumbnails:dry": "dotenvx run -- tsx scripts/upload-thumbnails.ts --dry-run",
     "setup:r2-domain": "dotenvx run -- bun run scripts/setup-r2-custom-domain.ts"
   },
   "dependencies": {
