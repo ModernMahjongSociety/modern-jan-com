@@ -1,0 +1,214 @@
+---
+import { getCollection } from 'astro:content';
+import * as fs from 'fs/promises';
+
+interface Props {
+  url: string;
+}
+
+interface LinkCardMetadata {
+  title: string;
+  description?: string;
+  image?: string;
+  fetchedAt: string;
+}
+
+interface LinkCardCache {
+  [url: string]: LinkCardMetadata;
+}
+
+const { url } = Astro.props;
+
+// URLから内部リンクかどうかを判定
+const isInternal = url.includes('modern-jan.com') || url.startsWith('/');
+
+let title = url;
+let description: string | undefined;
+let image: string | undefined;
+let href = url;
+
+if (isInternal) {
+  // 内部リンクの場合、legacySlugから記事を検索
+  // URL例: https://modern-jan.com/2022/04/13/haikouritsu/
+  // legacySlug: 2022/04/13/haikouritsu
+
+  let legacySlug: string | undefined;
+
+  if (url.includes('modern-jan.com')) {
+    const match = url.match(/modern-jan\.com\/(\d{4}\/\d{2}\/\d{2}\/[a-z0-9_-]+)/);
+    if (match) {
+      legacySlug = match[1].replace(/\/$/, ''); // 末尾のスラッシュを削除
+    }
+  }
+
+  if (legacySlug) {
+    const posts = await getCollection('posts');
+    const post = posts.find(p => p.data.legacySlug === legacySlug);
+
+    if (post) {
+      title = post.data.title;
+      description = post.data.description;
+      image = post.data.image || `/ogp/${post.slug}.png`;
+      href = `/blog/${post.slug}/`;
+    }
+  }
+} else {
+  // 外部リンクの場合、キャッシュファイルから取得
+  try {
+    const cacheFile = 'src/data/link-cards.json';
+    const cacheData = await fs.readFile(cacheFile, 'utf-8');
+    const cache: LinkCardCache = JSON.parse(cacheData);
+
+    const metadata = cache[url];
+    if (metadata) {
+      title = metadata.title;
+      description = metadata.description;
+      image = metadata.image;
+    }
+  } catch (error) {
+    // キャッシュファイルが存在しない、または読み込みエラーの場合
+    // フォールバック: URLをタイトルとして使用
+    console.warn(`LinkCard: キャッシュ読み込みエラー (${url})`, error);
+  }
+}
+
+// サムネイル画像のフォールバック
+const thumbnailUrl = image || '/ogp/default.png';
+---
+
+<article class="link-card">
+  <a href={href} class="link-card-link" target={isInternal ? undefined : '_blank'} rel={isInternal ? undefined : 'noopener noreferrer'}>
+    <div class="link-card-thumbnail">
+      <img
+        src={thumbnailUrl}
+        alt={title}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="link-card-content">
+      <h3 class="link-card-title">{title}</h3>
+      {description && <p class="link-card-description">{description}</p>}
+      <div class="link-card-meta">
+        <span class="link-card-domain">
+          {isInternal ? 'モダンジャン研究会' : new URL(url).hostname}
+        </span>
+        {!isInternal && (
+          <svg class="external-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        )}
+      </div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .link-card {
+    margin: 24px 0;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: white;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    max-width: 800px;
+    overflow: hidden;
+  }
+
+  .link-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .link-card-link {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .link-card-link:hover .link-card-title {
+    color: var(--color-accent);
+  }
+
+  .link-card-thumbnail {
+    flex-shrink: 0;
+    width: 160px;
+  }
+
+  .link-card-thumbnail img {
+    width: 160px;
+    height: 84px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+  }
+
+  .link-card-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .link-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+    margin: 0 0 8px 0;
+    transition: color 0.15s ease;
+    color: var(--color-text-primary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .link-card-description {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 8px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .link-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .link-card-domain {
+    font-weight: 500;
+  }
+
+  .external-icon {
+    width: 12px;
+    height: 12px;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 768px) {
+    .link-card-link {
+      flex-direction: column;
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .link-card-thumbnail {
+      width: 100%;
+    }
+
+    .link-card-thumbnail img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1200 / 630;
+    }
+  }
+</style>

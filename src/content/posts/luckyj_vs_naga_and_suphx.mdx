@@ -8,6 +8,8 @@ draft: false
 image: "https://r2.modern-jan.com/thumbnails/luckyj_vs_naga_and_suphx.avif"
 ---
 
+import LinkCard from '../../components/LinkCard.astro';
+
 2023年5月30日、ネット麻雀界隈に激震が走りました。
 
 LuckyJという麻雀AIが一ヶ月ほどで特上卓で10段を達成しました。
@@ -394,11 +396,11 @@ LuckyJは「**ゲーム理論を麻雀に取り入れ、現状最も麻雀の神
 
 初心者はルールと牌効率、ベタオリを学びましょう。平澤元気さんのYouTubeチャンネルや初心者向けの戦術本がおすすめです。
 
-https://modern-jan.com/2022/04/13/haikouritsu/
+<LinkCard url="https://modern-jan.com/2022/04/13/haikouritsu/" />
 
 中級者である雀魂雀豪や天鳳5段以上は少し高度な牌効率や押し引きを学ぶと良いと思います。ゆうせーさんのYoutubeチャンネルや書籍、渋川難波プロのチャンネルオススメです。
 
-https://modern-jan.com/2023/09/05/middle\_haikouritsu/
+<LinkCard url="https://modern-jan.com/2023/09/05/middle_haikouritsu/" />
 
 中級者に対しては打ち筋タイプごとのストレートな手組みを学ぶツールとして**NAGAの牌譜検討サービス**がおすすめです。現代の速度と打点のバランスを見た麻雀でミスを減らすという意味では大変有意義だと思います。
 
@@ -430,7 +432,7 @@ Lucky JやSuphxから学びたい！という方は多いでしょう。しか�
 
 私は麻雀を楽しみたい人のためのツールの開発や私設リーグや大会の開催を行っています。
 
-https://modern-jan.com/2022/07/19/mjrs/
+<LinkCard url="https://modern-jan.com/2022/07/19/mjrs/" />
 
 もしこの記事を読んでためになったと思った方はぜひAmazonアソシエイトリンクを踏んだ上でお買い物して頂いたり（踏んでから一定時間内の決済が対象）、下のcodocから支援していただけると嬉しいです。
 
@@ -443,7 +445,10 @@ https://modern-jan.com/2022/07/19/mjrs/
 
 ### LuckyJ情報
 
-*   [腾讯AI登顶国际麻将平台，刷新全球最好成绩](https://mp.weixin.qq.com/s/yGH8rH05XvSFqWMl4VZWFw)：LuckyJ開発元のテンセントAI Labの公式記事
+LuckyJ開発元のテンセントAI Labの公式記事：
+
+<LinkCard url="https://mp.weixin.qq.com/s/yGH8rH05XvSFqWMl4VZWFw" />
+
 *   [麻雀AI「Lucky J」についてのテンセント公式記事の日本語訳](https://modern-jan.com/2023/09/06/luckyj_article_ja/)：上記記事の日本語訳。拙訳ですがよければ。
 *   [多人数不完全情報ゲームにおけるAI ~ポーカーと麻雀を例として~ | SlideShare](https://www.slideshare.net/slideshow/embed_code/key/6CRqIsNdKUwdLR)：ゲーム理論と不完全情報ゲームの関係性、なぜ3人以上のナッシュ均衡を求めるのが難しいのか、などについてはこちらの資料がわかりやすい。
 *   [Actor-Critic Policy Optimization in a Large-Scale Imperfect-Information Game](https://openreview.net/forum?id=DTXZqTNV5nW)：Lucky Jの開発陣が先んじて1対1麻雀でアルゴリズムの研究を行った論文。
