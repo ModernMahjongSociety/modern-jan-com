@@ -1,0 +1,213 @@
+---
+import { getCollection } from 'astro:content';
+
+// 最新記事を5件取得
+const allPosts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
+  .slice(0, 5);
+
+// タグを集計
+const tagCounts = new Map<string, number>();
+const allPostsForTags = await getCollection('posts', ({ data }) => !data.draft);
+allPostsForTags.forEach(post => {
+  post.data.tags?.forEach(tag => {
+    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+  });
+});
+
+// タグを投稿数順にソート
+const sortedTags = Array.from(tagCounts.entries())
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 10);
+---
+
+<aside class="sidebar">
+  <!-- 最近の投稿 -->
+  <section class="sidebar-section">
+    <h3 class="sidebar-title">最近の投稿</h3>
+    <ul class="recent-posts">
+      {allPosts.map((post) => (
+        <li>
+          <a href={`/blog/${post.slug}/`}>
+            <div class="post-title">{post.data.title}</div>
+            <time datetime={post.data.publishedAt.toISOString()}>
+              {post.data.publishedAt.toLocaleDateString('ja-JP', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </time>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- タグ一覧 -->
+  <section class="sidebar-section">
+    <h3 class="sidebar-title">タグ</h3>
+    <div class="tag-cloud">
+      {sortedTags.map(([tag, count]) => (
+        <a href={`/tag/${tag}/`} class="tag-item">
+          {tag} <span class="tag-count">({count})</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ナビゲーション -->
+  <section class="sidebar-section">
+    <h3 class="sidebar-title">コンテンツ</h3>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="/">TOP</a></li>
+        <li><a href="/about/">団体概要</a></li>
+        <li><a href="/member/">メンバー紹介</a></li>
+        <li><a href="/title/">タイトル戦</a></li>
+        <li><a href="/blog/">記事一覧</a></li>
+        <li><a href="/kansen/">観戦記</a></li>
+        <li><a href="/books/">麻雀戦術書</a></li>
+        <li><a href="/mahjong-introduction/">麻雀教則動画</a></li>
+        <li><a href="/rule/">ルール</a></li>
+      </ul>
+    </nav>
+  </section>
+
+  <!-- その他のリンク -->
+  <section class="sidebar-section">
+    <h3 class="sidebar-title">その他</h3>
+    <ul class="sidebar-links">
+      <li><a href="/privacy/">プライバシーポリシー</a></li>
+      <li><a href="https://maten-ro.com/" target="_blank" rel="noopener noreferrer">麻点楼（点数計算）</a></li>
+    </ul>
+  </section>
+</aside>
+
+<style>
+  .sidebar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .sidebar-section {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .sidebar-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-accent);
+    color: var(--color-text-primary);
+  }
+
+  /* 最近の投稿 */
+  .recent-posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .recent-posts li {
+    margin-bottom: 16px;
+  }
+
+  .recent-posts li:last-child {
+    margin-bottom: 0;
+  }
+
+  .recent-posts a {
+    text-decoration: none;
+    color: var(--color-text-primary);
+    display: block;
+    transition: opacity 0.15s ease;
+  }
+
+  .recent-posts a:hover {
+    opacity: 0.7;
+  }
+
+  .post-title {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  .recent-posts time {
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
+  }
+
+  /* タグクラウド */
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag-item {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--color-bg-secondary);
+    border-radius: 16px;
+    font-size: 0.875rem;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .tag-item:hover {
+    background: var(--color-bg-tertiary);
+  }
+
+  .tag-count {
+    color: var(--color-text-tertiary);
+    font-size: 0.75rem;
+  }
+
+  /* ナビゲーション */
+  .sidebar-nav ul,
+  .sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sidebar-nav li,
+  .sidebar-links li {
+    margin-bottom: 8px;
+  }
+
+  .sidebar-nav li:last-child,
+  .sidebar-links li:last-child {
+    margin-bottom: 0;
+  }
+
+  .sidebar-nav a,
+  .sidebar-links a {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    display: block;
+    padding: 6px 0;
+    transition: color 0.15s ease;
+  }
+
+  .sidebar-nav a:hover,
+  .sidebar-links a:hover {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 1024px) {
+    .sidebar {
+      margin-top: 48px;
+    }
+  }
+</style>

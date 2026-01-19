@@ -6,6 +6,7 @@ import TableOfContents from '../components/TableOfContents.astro';
 import TagList from '../components/TagList.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import SocialShare from '../components/SocialShare.astro';
+import Sidebar from '../components/Sidebar.astro';
 
 interface Props {
   post: {
@@ -45,41 +46,65 @@ const breadcrumbItems = [
 >
   <Header />
   <main>
-    <article class="post">
-      <Breadcrumb items={breadcrumbItems} />
+    <div class="container">
+      <article class="post">
+        <Breadcrumb items={breadcrumbItems} />
 
-      <header>
-        <h1>{title}</h1>
-        <div class="meta">
-          <time datetime={publishedAt.toISOString()}>
-            {publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
-          </time>
-          {updatedAt && (
-            <span class="updated">
-              （更新: {updatedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}）
-            </span>
-          )}
+        <header>
+          <h1>{title}</h1>
+          <div class="meta">
+            <time datetime={publishedAt.toISOString()}>
+              {publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </time>
+            {updatedAt && (
+              <span class="updated">
+                （更新: {updatedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}）
+              </span>
+            )}
+          </div>
+          <TagList tags={tags} />
+        </header>
+
+        <TableOfContents headings={headings} />
+
+        <div class="content">
+          <slot />
         </div>
-        <TagList tags={tags} />
-      </header>
 
-      <TableOfContents headings={headings} />
+        <SocialShare title={title} url={Astro.url.href} />
+      </article>
 
-      <div class="content">
-        <slot />
-      </div>
-
-      <SocialShare title={title} url={Astro.url.href} />
-    </article>
+      <Sidebar />
+    </div>
   </main>
   <Footer />
 </BaseLayout>
 
 <style>
-  .post {
-    max-width: 896px;
+  .container {
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 40px 40px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 48px;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 40px 20px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .container {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  .post {
+    min-width: 0;
   }
 
   h1 {

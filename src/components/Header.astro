@@ -15,6 +15,13 @@ const currentPath = Astro.url.pathname;
     <a href="/" class="logo">
       モダンジャン研究会
     </a>
+
+    <button class="menu-toggle" aria-label="メニューを開く">
+      <span class="hamburger"></span>
+      <span class="hamburger"></span>
+      <span class="hamburger"></span>
+    </button>
+
     <nav class="nav">
       {navItems.map(item => (
         <a
@@ -28,6 +35,27 @@ const currentPath = Astro.url.pathname;
   </div>
 </header>
 
+<script>
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.nav');
+  const header = document.querySelector('.header');
+
+  menuToggle?.addEventListener('click', () => {
+    nav?.classList.toggle('active');
+    menuToggle?.classList.toggle('active');
+    header?.classList.toggle('menu-open');
+  });
+
+  // メニュー内のリンクをクリックしたらメニューを閉じる
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      nav?.classList.remove('active');
+      menuToggle?.classList.remove('active');
+      header?.classList.remove('menu-open');
+    });
+  });
+</script>
+
 <style>
   .header {
     background: var(--color-primary);
@@ -39,9 +67,9 @@ const currentPath = Astro.url.pathname;
   }
 
   .header-inner {
-    max-width: 1024px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 40px;
     height: 64px;
     display: flex;
     align-items: center;
@@ -49,24 +77,56 @@ const currentPath = Astro.url.pathname;
   }
 
   .logo {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: white;
     text-decoration: none;
     transition: opacity 0.15s ease;
+    z-index: 101;
   }
 
   .logo:hover {
     opacity: 0.8;
   }
 
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    z-index: 101;
+  }
+
+  .hamburger {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+  }
+
+  .menu-toggle.active .hamburger:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .menu-toggle.active .hamburger:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.active .hamburger:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
   .nav {
     display: flex;
-    gap: 24px;
+    gap: 28px;
   }
 
   .nav-link {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     color: white;
     text-decoration: none;
     opacity: 0.9;
@@ -85,30 +145,51 @@ const currentPath = Astro.url.pathname;
 
   @media (max-width: 768px) {
     .header-inner {
-      padding: 0 16px;
-      height: 56px;
+      padding: 0 20px;
     }
 
     .logo {
+      font-size: 1.125rem;
+    }
+
+    .menu-toggle {
+      display: flex;
+    }
+
+    .nav {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: var(--color-primary);
+      flex-direction: column;
+      gap: 0;
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav.active {
+      max-height: 400px;
+    }
+
+    .nav-link {
       font-size: 1rem;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      opacity: 0.95;
     }
 
-    .nav {
-      gap: 16px;
+    .nav-link.active {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.1);
+      opacity: 1;
     }
 
-    .nav-link {
-      font-size: 0.8125rem;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .nav {
-      gap: 12px;
-    }
-
-    .nav-link {
-      font-size: 0.75rem;
+    .nav-link:last-child {
+      border-bottom: none;
     }
   }
 </style>

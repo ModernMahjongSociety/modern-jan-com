@@ -5,6 +5,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import PostCard from '../../components/PostCard.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import Sidebar from '../../components/Sidebar.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -33,30 +34,54 @@ const breadcrumbItems = [
 <BaseLayout title={`${tag} の記事一覧`} description={`${tag}に関する記事一覧`}>
   <Header />
   <main>
-    <div class="tag-page">
-      <Breadcrumb items={breadcrumbItems} />
+    <div class="container">
+      <div class="tag-page">
+        <Breadcrumb items={breadcrumbItems} />
 
-      <h1>
-        <span class="label">タグ:</span>
-        {tag}
-      </h1>
-      <p class="count">{posts.length}件の記事</p>
+        <h1>
+          <span class="label">タグ:</span>
+          {tag}
+        </h1>
+        <p class="count">{posts.length}件の記事</p>
 
-      <div class="posts-list">
-        {posts.map((post) => (
-          <PostCard post={post} />
-        ))}
+        <div class="posts-list">
+          {posts.map((post) => (
+            <PostCard post={post} />
+          ))}
+        </div>
       </div>
+
+      <Sidebar />
     </div>
   </main>
   <Footer />
 </BaseLayout>
 
 <style>
-  .tag-page {
-    max-width: 896px;
+  .container {
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 40px 40px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 48px;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 40px 20px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .container {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  .tag-page {
+    min-width: 0;
   }
 
   h1 {

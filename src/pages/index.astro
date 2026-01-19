@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PostCard from '../components/PostCard.astro';
+import Sidebar from '../components/Sidebar.astro';
 
 // 最新5件の記事を取得
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
@@ -29,16 +30,20 @@ const recentPosts = allPosts
     </section>
 
     <section class="recent-posts">
-      <div class="container">
-        <h2 class="section-title">最新記事</h2>
-        <div class="posts-list">
-          {recentPosts.map(post => (
-            <PostCard post={post} />
-          ))}
+      <div class="content-wrapper">
+        <div class="main-content">
+          <h2 class="section-title">最新記事</h2>
+          <div class="posts-list">
+            {recentPosts.map(post => (
+              <PostCard post={post} />
+            ))}
+          </div>
+          <div class="view-all">
+            <a href="/blog/" class="view-all-link">すべての記事を見る →</a>
+          </div>
         </div>
-        <div class="view-all">
-          <a href="/blog/" class="view-all-link">すべての記事を見る →</a>
-        </div>
+
+        <Sidebar />
       </div>
     </section>
   </main>
@@ -109,6 +114,32 @@ const recentPosts = allPosts
 
   .recent-posts {
     padding: 64px 0;
+  }
+
+  .content-wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 48px;
+  }
+
+  @media (max-width: 768px) {
+    .content-wrapper {
+      padding: 0 20px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .content-wrapper {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  .main-content {
+    min-width: 0;
   }
 
   .section-title {

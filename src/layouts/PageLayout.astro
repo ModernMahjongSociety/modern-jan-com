@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import Sidebar from '../components/Sidebar.astro';
 
 interface Props {
   title: string;
@@ -23,26 +24,50 @@ const finalBreadcrumbItems = breadcrumbItems || defaultBreadcrumbItems;
 <BaseLayout title={title} description={description}>
   <Header />
   <main>
-    <article class="page">
-      <Breadcrumb items={finalBreadcrumbItems} />
+    <div class="container">
+      <article class="page">
+        <Breadcrumb items={finalBreadcrumbItems} />
 
-      <header>
-        <h1>{title}</h1>
-      </header>
+        <header>
+          <h1>{title}</h1>
+        </header>
 
-      <div class="content">
-        <slot />
-      </div>
-    </article>
+        <div class="content">
+          <slot />
+        </div>
+      </article>
+
+      <Sidebar />
+    </div>
   </main>
   <Footer />
 </BaseLayout>
 
 <style>
-  .page {
-    max-width: 896px;
+  .container {
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 40px 40px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 48px;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 40px 20px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .container {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  .page {
+    min-width: 0;
   }
 
   h1 {
