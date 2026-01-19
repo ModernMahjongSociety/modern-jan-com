@@ -115,10 +115,10 @@ function generateOGTemplate(title: string, tag: string): React.ReactElement {
 }
 
 async function generateOGImage(post: PostMeta): Promise<Buffer> {
-  // Noto Sans JP フォントファイルを読み込み
+  // Noto Sans JP フォントファイルを読み込み（完全な日本語セット）
   const fontPath = join(
     process.cwd(),
-    'node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-102-700-normal.woff'
+    'node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-japanese-700-normal.woff'
   );
   const fontData = readFileSync(fontPath);
 
