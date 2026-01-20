@@ -111,14 +111,15 @@ const thumbnailUrl = image || '/ogp/default.png';
     border: 1px solid var(--color-border);
     border-radius: 8px;
     background: white;
+    box-shadow: var(--shadow-sm);
     transition: box-shadow 0.2s ease, transform 0.2s ease;
     max-width: 800px;
     overflow: hidden;
   }
 
   .link-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
   }
 
   .link-card-link {

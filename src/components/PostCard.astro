@@ -53,11 +53,15 @@ const thumbnailUrl = image || `/ogp/${post.slug}.png`;
     padding: 24px;
     border-bottom: 1px solid var(--color-border-light);
     background: white;
-    transition: background-color 0.15s ease;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.15s ease;
   }
 
   .post-card:hover {
     background: var(--color-bg-secondary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
   }
 
   .post-link {
@@ -81,7 +85,7 @@ const thumbnailUrl = image || `/ogp/${post.slug}.png`;
     width: 200px;
     height: 105px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 8px;
     border: 1px solid var(--color-border);
     display: block;
   }
