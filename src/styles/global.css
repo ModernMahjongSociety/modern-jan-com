@@ -16,8 +16,8 @@
   --color-text-tertiary: #94a3b8;
 
   /* アクセント */
-  --color-accent: #2563eb;
-  --color-accent-hover: #1d4ed8;
+  --color-accent: #394867;
+  --color-accent-hover: #14274E;
 
   /* 麻雀テーマ（装飾的に使用） */
   --color-mahjong-green: #1a472a;
@@ -27,8 +27,8 @@
   --color-border-light: #f1f5f9;
 
   /* シャドウ */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* リセットCSS */
@@ -47,12 +47,13 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP',
-               'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+  font-family: 'Yu Gothic', 'YuGothic', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN',
+               -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', 'Meiryo', sans-serif;
   color: var(--color-text-primary);
   background-color: var(--color-bg);
   line-height: 1.8;
   font-weight: 400;
+  font-size: 20px;
 }
 
 /* リンク */
@@ -73,9 +74,12 @@ a:hover {
 }
 
 /* ボタン */
-button {
+button, .button {
   font-family: inherit;
   cursor: pointer;
+  border-radius: 9999px;
+  padding: 12px 32px;
+  font-weight: 600;
 }
 
 /* 画像 */
