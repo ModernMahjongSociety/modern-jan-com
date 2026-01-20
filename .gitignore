@@ -14,8 +14,9 @@ pnpm-debug.log*
 
 
 # environment variables
-.env
+# .env is now encrypted with dotenvx and safe to commit
 .env.production
+.env.backup
 
 # macOS-specific files
 .DS_Store
@@ -28,3 +29,5 @@ pnpm-debug.log*
 
 # application logs
 logs/
+
+.env.keys
