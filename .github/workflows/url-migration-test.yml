@@ -21,16 +21,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        
       - name: Install dependencies
         run: bun i --frozen-lockfile
 
       - name: Run URL migration test
-        run: npx tsx scripts/url-migration-test.ts ${{ github.event.inputs.base_url || 'https://modern-jan-com.ken0421wabu.workers.dev' }}
+        run: bunx tsx scripts/url-migration-test.ts ${{ github.event.inputs.base_url || 'https://modern-jan-com.ken0421wabu.workers.dev' }}
         continue-on-error: true
 
       - name: Generate test report
