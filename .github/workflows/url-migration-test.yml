@@ -27,7 +27,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm ci
+        run: bun i --frozen-lockfile
 
       - name: Run URL migration test
         run: npx tsx scripts/url-migration-test.ts ${{ github.event.inputs.base_url || 'https://modern-jan-com.ken0421wabu.workers.dev' }}
