@@ -33,5 +33,5 @@ export async function getStaticPaths() {
 const { newSlug } = Astro.props;
 
 // 新しいURLにリダイレクト
-return Astro.redirect(`/blog/${newSlug}/`, 301);
+return Astro.redirect(`/blog/${newSlug}/`, 302);
 ---
