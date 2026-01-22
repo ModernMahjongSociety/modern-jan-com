@@ -91,17 +91,20 @@
         redirect: checkRedirect ? "manual" : "follow",
       });
 
+      // 301, 302, 307, 308 はすべて有効なリダイレクトステータスコード
+      const isRedirect = [301, 302, 307, 308].includes(response.status);
+
       const result = {
         url: path,
         category,
         status: response.status,
-        ok: checkRedirect ? (response.status === 301 || response.status === 302) : response.ok,
+        ok: checkRedirect ? isRedirect : response.ok,
         redirectedTo: null,
         expectedRedirect,
         redirectOk: null,
       };
 
-      if (checkRedirect && (response.status === 301 || response.status === 302)) {
+      if (checkRedirect && isRedirect) {
         result.redirectedTo = response.headers.get("location");
         if (expectedRedirect && result.redirectedTo) {
           result.redirectOk = result.redirectedTo.endsWith(expectedRedirect);

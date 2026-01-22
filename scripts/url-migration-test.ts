@@ -98,14 +98,17 @@ async function testUrl(path: string, category: string, checkRedirect: boolean = 
       redirect: checkRedirect ? "manual" : "follow",
     });
 
+    // 301, 302, 307, 308 はすべて有効なリダイレクトステータスコード
+    const isRedirect = [301, 302, 307, 308].includes(response.status);
+
     const result: TestResult = {
       url: path,
       category,
       status: response.status,
-      ok: checkRedirect ? response.status === 301 || response.status === 302 : response.ok,
+      ok: checkRedirect ? isRedirect : response.ok,
     };
 
-    if (checkRedirect && (response.status === 301 || response.status === 302)) {
+    if (checkRedirect && isRedirect) {
       result.redirectedTo = response.headers.get("location") || undefined;
     }
 
