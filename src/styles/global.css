@@ -14,6 +14,7 @@
   --color-text-primary: #1e293b;
   --color-text-secondary: #64748b;
   --color-text-tertiary: #64748b;  /* #94a3b8から変更: WCAG AA基準を満たすコントラスト比4.5:1以上 */
+  --color-tag-text: #475569;  /* タグ専用: WCAG AA基準（コントラスト比5.36:1）を満たす色 */
 
   /* アクセント */
   --color-accent: #2563eb;
