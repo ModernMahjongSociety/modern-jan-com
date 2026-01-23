@@ -35,4 +35,20 @@ export default defineConfig({
       theme: 'github-dark',
     },
   },
+  vite: {
+    build: {
+      cssMinify: true,
+      minify: 'esbuild',
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            // Split node_modules into vendor chunk for better caching
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+          },
+        },
+      },
+    },
+  },
 });
