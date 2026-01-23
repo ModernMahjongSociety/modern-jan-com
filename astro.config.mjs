@@ -6,6 +6,7 @@ import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import { remarkImageSize } from './src/lib/remark-image-size';
 
 // https://astro.build/config
 export default defineConfig({
@@ -23,6 +24,9 @@ export default defineConfig({
   }),
   integrations: [mdx(), sitemap()],
   markdown: {
+    remarkPlugins: [
+      remarkImageSize,
+    ],
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: 'wrap' }],

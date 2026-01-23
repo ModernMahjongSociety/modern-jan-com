@@ -1,14 +1,27 @@
 ---
 title: "最強AI【LuckyJ】とNAGA/Suphx徹底比較！技術の違いから見える打牌の違い"
 publishedAt: 2023-09-06
-tags: ["AI", "Lucky J", "NAGA", "Suphx", "お知らせ", "ゆうせー", "天鳳", "戦略", "戦術", "雀魂", "麻雀"]
+tags:
+  [
+    "AI",
+    "Lucky J",
+    "NAGA",
+    "Suphx",
+    "お知らせ",
+    "ゆうせー",
+    "天鳳",
+    "戦略",
+    "戦術",
+    "雀魂",
+    "麻雀",
+  ]
 category: "お知らせ"
 legacySlug: "2023/09/06/luckyj_vs_naga_and_suphx"
 draft: false
 image: "https://r2.modern-jan.com/thumbnails/luckyj_vs_naga_and_suphx.avif"
 ---
 
-import LinkCard from '../../components/LinkCard.astro';
+import LinkCard from "../../components/LinkCard.astro";
 
 2023年5月30日、ネット麻雀界隈に激震が走りました。
 
@@ -16,7 +29,7 @@ LuckyJという麻雀AIが一ヶ月ほどで特上卓で10段を達成しまし�
 
 しかも特上卓東南戦で1000戦以上打って安定段位が**約10.7段**という圧倒的な成績で。
 
-![](https://r2.modern-jan.com/2023/08/image-5-1024x953.avif)
+![medium:](https://r2.modern-jan.com/2023/08/image-5-1024x953.avif)
 
 （画像出典：[テンセント](https://mp.weixin.qq.com/s/yGH8rH05XvSFqWMl4VZWFw)）
 
@@ -38,12 +51,12 @@ AIといえば効率重視で向聴数を落とすような柔らかい打牌は
 
 技術そのものについて細かく説明するのではなく、**LuckyJの打牌意図を察するための一助となるべく**、LuckyJの**独自性の解説**と私なりの**推測**を提供したいという趣旨になっています。
 
-_著者は情報工学の修士号を取得しているので、最低限のAIの知識は持ち合わせていますが、最新のAIのアルゴリズムや論文を把握しているわけではありません。よって間違いを含む場合があります。お気づきになった場合はTwitterまでご連絡ください。([@kbkn3](https://twitter.com/kbkn3))_  
+_著者は情報工学の修士号を取得しているので、最低限のAIの知識は持ち合わせていますが、最新のAIのアルゴリズムや論文を把握しているわけではありません。よって間違いを含む場合があります。お気づきになった場合はTwitterまでご連絡ください。([@kbkn3](https://twitter.com/kbkn3))_
 _また専門知識を省くことでわかりやすさを重視しています。強化学習や教師あり学習の違いを取り上げなかったり、学習を効率的に進めるためのテクニックなどは意図的に省いていることがあります。_
 
 ## 近年のAI事情
 
-機械学習（データからコンピュータが自ら学習すること）の歴史はコンピュータ黎明期から始まる長いものですが、最近はディープラーニング（深層学習）という手法で様々なタスクをクリアして話題になっています。  
+機械学習（データからコンピュータが自ら学習すること）の歴史はコンピュータ黎明期から始まる長いものですが、最近はディープラーニング（深層学習）という手法で様々なタスクをクリアして話題になっています。
 ディープラーニングの元となるアイディア自体は古いものだと1943年頃から存在し、今の深層学習の原型は1979年には登場していますが、いくつかのハードルが存在したため、昨今のような驚異的な成果を出すまでには至りませんでした。
 
 そのハードルは大きく分けると
@@ -56,7 +69,7 @@ _また専門知識を省くことでわかりやすさを重視しています�
 
 の3種類です。このハードルがあるためにディープラーニングは理論があっても流行らず、他の手法によって開発されたAIがチェッカーやチェスといった盤面のパターンが少ないものから人間に勝利してきました。
 
-しかし2006年に発表された論文に掲載された技術がディープラーニングの技術的なハードルをクリアしました。  
+しかし2006年に発表された論文に掲載された技術がディープラーニングの技術的なハードルをクリアしました。
 またコンピュータのスペックの急激な向上によって求められる計算量のハードルをクリアし、インターネットの発展によって学習に使用できるデータが流通することで、2000年代末から2010年代にかけて急激に深層学習が成果を出し、普及しました。
 
 最も有名になったのは2015年に人間のプロ囲碁棋士を互先（ハンディキャップなし）で破った初のAIとなった**AlphaGo**でしょう。
@@ -69,16 +82,16 @@ _また専門知識を省くことでわかりやすさを重視しています�
 
 この記事を読むにあたって抑えてほしいポイントは、
 
-*   完全情報ゲームにおいては理論・マシンスペックの進化に伴って、観測可能な盤面の情報量が多いゲームに対応できるようになった
-*   不完全情報ゲームは隠された不完全情報（相手の手）を考慮したプレイが必要になるため、完全情報ゲームよりアプローチが難しい
-    *   隠された情報が多いほど難しい。隠された情報のパターンが比較的少ないポーカーでまず成功した
+- 完全情報ゲームにおいては理論・マシンスペックの進化に伴って、観測可能な盤面の情報量が多いゲームに対応できるようになった
+- 不完全情報ゲームは隠された不完全情報（相手の手）を考慮したプレイが必要になるため、完全情報ゲームよりアプローチが難しい
+  - 隠された情報が多いほど難しい。隠された情報のパターンが比較的少ないポーカーでまず成功した
 
 ということです。
 
 NAGAの公式解説記事においては
 
 > 麻雀は相手の手牌が見えず（不完全情報）、次にどの牌を引くのかわからない（不確定）という難しさのあるゲームです。 プレイヤーが4人のため次の自分の手番の状態が予測がしづらい点や、1試合が複数局からなる半荘という単位で最終的な成績が決定されるため長期的な戦略が必要なことも麻雀の難しい点です。 
-> 
+>
 > 深層学習麻雀AI「NAGA」 - DWANGO MEDIA VILLAGE
 
 と書かれています。麻雀に対するアプローチの難しさが伝わると思います。
@@ -101,7 +114,7 @@ AIに触れたことがない人にとってのAIの打牌根拠を出力させ�
 
 正確にはNAGAの牌譜検討画面を見ればわかるように「打3mが良いっぽい。次に良さそうなのが3sかな〜」という、経験（学習）から来る感覚的なものと言ってもいいでしょう。
 
-![](https://r2.modern-jan.com/2023/08/image-9-1024x980.avif)
+![medium:](https://r2.modern-jan.com/2023/08/image-9-1024x980.avif)
 
 NAGA牌譜画面（https://twitter.com/NAGA025/status/1476807899452440583?s=20）
 
@@ -109,8 +122,8 @@ NAGA牌譜画面（https://twitter.com/NAGA025/status/1476807899452440583?s=20�
 
 正確に言うならば
 
-*   「この盤面で打つべき牌は打3mが40%、打3sが20%、その他の選択肢は5%」と共に「打1pは和了率2% up、放銃率3%、打1sは…となりそう」というおまけ情報も出力させることもできる
-*   「打1pは和了率2% up、放銃率3%、打1sは…**だから、**この盤面で打つべき牌は打3m」とロジカルに導き出しているわけではない
+- 「この盤面で打つべき牌は打3mが40%、打3sが20%、その他の選択肢は5%」と共に「打1pは和了率2% up、放銃率3%、打1sは…となりそう」というおまけ情報も出力させることもできる
+- 「打1pは和了率2% up、放銃率3%、打1sは…**だから、**この盤面で打つべき牌は打3m」とロジカルに導き出しているわけではない
 
 ということです。
 
@@ -122,10 +135,10 @@ NAGAのアプローチは天鳳位を始めとした天鳳鳳凰卓に在籍す�
 
 AIの構成は
 
-*   打牌モデル
-*   副露モデル
-*   立直モデル
-*   槓モデル
+- 打牌モデル
+- 副露モデル
+- 立直モデル
+- 槓モデル
 
 の4つのモデルで構成されており、これらが自身の手牌、4人の河、副露、点数、見えていない牌の数など、現在の局面を完全に再現できる情報を入力として打牌や副露するか、立直するかなどを判断しています。
 
@@ -133,9 +146,9 @@ AIの構成は
 
 NAGAの学習の際には局数の情報も与えられているため、ゲームの進行具合に合わせた長期戦略も学習しています。
 
-![](https://r2.modern-jan.com/2023/09/reach_naga-1024x503.avif)
+![medium:](https://r2.modern-jan.com/2023/09/reach_naga-1024x503.avif)
 
-![](https://r2.modern-jan.com/2023/09/reach_human-1024x503.avif)
+![medium:](https://r2.modern-jan.com/2023/09/reach_human-1024x503.avif)
 
 _NAGAと人間(鳳凰卓)の局ごとの立直率の推移の比較（深層学習麻雀AI「NAGA」 - DWANGO MEDIA VILLAGE　より）_
 
@@ -159,15 +172,15 @@ NAGA 新タイプの要素（https://twitter.com/NAGA025/status/1493862312469745
 
 ### NAGAの弱点
 
-*   **オリや仕掛け・リーチへの対応の判断以外でのシャンテン数下げる判断が苦手**
-*   **槓モデルの振る舞いが限定的**
+- **オリや仕掛け・リーチへの対応の判断以外でのシャンテン数下げる判断が苦手**
+- **槓モデルの振る舞いが限定的**
 
 などが挙げられています。
 
 これらの理由については**私個人の予想**となりますが、
 
-*   シャンテン数が進むこと・和了率予想・打点予想に対して報酬が用意され、学習に活かしているために**シャンテン数を下げることが苦手**
-*   槓の選択は牌譜中でも**レアな行動であるため学習に十分な局面数がない**ことで、槓によって生じる出来事（自身の打点上昇、他家の打点上昇、槓によって4枚目の牌がなくなること等）を適切に評価できていないことで適切な選択ができない
+- シャンテン数が進むこと・和了率予想・打点予想に対して報酬が用意され、学習に活かしているために**シャンテン数を下げることが苦手**
+- 槓の選択は牌譜中でも**レアな行動であるため学習に十分な局面数がない**ことで、槓によって生じる出来事（自身の打点上昇、他家の打点上昇、槓によって4枚目の牌がなくなること等）を適切に評価できていないことで適切な選択ができない
 
 と考えています。
 
@@ -185,11 +198,11 @@ Suphxは論文が出た時点のNAGA（8段到達当時）より優秀な成績�
 
 まず、AIの構成を確認します。ここはNAGAとほとんど変わりません。
 
-*   打牌モデル
-*   チー判断モデル
-*   ポン判断モデル
-*   立直モデル
-*   槓モデル
+- 打牌モデル
+- チー判断モデル
+- ポン判断モデル
+- 立直モデル
+- 槓モデル
 
 の5つのモデルで構成されています。大きな違いはアルゴリズムです。
 
@@ -304,24 +317,24 @@ NAGA/Suphxは共に天鳳鳳凰卓の牌譜を用いて学習していますが�
 
 ##### ゲーム理論の導入が何故強さに繋がったのか
 
-ここからは完全に私の私見になりますが、打牌と共にゲーム理論の影響が出ていそうなところを見てみましょう。  
+ここからは完全に私の私見になりますが、打牌と共にゲーム理論の影響が出ていそうなところを見てみましょう。
 お恥ずかしながら私の雀力は雀魂で雀豪に居る程度ですので、打牌の評価については後述するゆうせーさんのnoteなどを見て頂くのがオススメです。
 
 ![](https://r2.modern-jan.com/2023/09/tenhou.net_3__log2023053016gm-0029-0000-e54b3b98tw0-2-1024x808.avif)
 
 トップ目のLucky J。ドラ色のホンイツ気配の下家に対してペン3m払い。
 
-Lucky Jは1副露に対しては危ない牌から被せるようなプレイも多いです。  
-・オリ過ぎは下家以外が楽になって得をする。  
-・下家のホンイツの牌を早くから絞ると自分は圧倒的に損になる。  
-・親の連荘は防ぎ、放銃はしたくない。下家に鳴かせて下3人でリスクを取り合ってもらう分には得。  
+Lucky Jは1副露に対しては危ない牌から被せるようなプレイも多いです。
+・オリ過ぎは下家以外が楽になって得をする。
+・下家のホンイツの牌を早くから絞ると自分は圧倒的に損になる。
+・親の連荘は防ぎ、放銃はしたくない。下家に鳴かせて下3人でリスクを取り合ってもらう分には得。
 ・ドラ表ペン3mは下家も持っていそうなので頼らず、赤5mにドラを引いて形が良くなれば手を組む価値アリ。
 
 といった方針でしょうか？この後は対面の親からリーチが入り、下家ケアをしながら丁寧にオリていました。
 
 ![](https://r2.modern-jan.com/2023/09/tenhou.net_3__log2023053016gm-0029-0000-e54b3b98tw0-3-1024x808.avif)
 
-こちら南3局では一気通貫の役あり聴牌を目指しつつ、ドラも使いたい意図を見せていたが、3段目に入り全体に対して対応を始めたLucky Jの図。  
+こちら南3局では一気通貫の役あり聴牌を目指しつつ、ドラも使いたい意図を見せていたが、3段目に入り全体に対して対応を始めたLucky Jの図。
 下家の3s手出しに放銃して局を消化してもいいし、親の高い黙聴に打ちたくないのか？親の現物である1sの対子落としを初めています。
 
 続いて打2pとした場面。
@@ -412,19 +425,19 @@ Lucky JやSuphxから学びたい！という方は多いでしょう。しか�
 
 #### ゆうせーさんのLuckyJコンテンツ（旧→新）
 
-*   [天鳳位間近の最強AI【LuckyJ】をMリーグ観戦記者が丸裸にします。 - note](https://note.com/getawonarashite/n/n449ff8e33986?magazine_key=m5ac7ab04884e)
-*   [ついに、人間は追い抜かれたのか。最強AI【LuckyJ】が見つめる先にあるものとは… - note](https://note.com/getawonarashite/n/nb93bc97ea0ac?magazine_key=m5ac7ab04884e)
-*   [時代から取り残されないために… 最強AI【LuckyJ】から【超絶トイツテクニック】を盗め！ - note](https://note.com/getawonarashite/n/nd8c89f01d41e?magazine_key=m5ac7ab04884e)
-*   [驚愕の打牌８連発！【最新AI】LuckyJ何切る問題集！vol.1 - note](https://note.com/getawonarashite/n/n8ba8d11e9eb6)
-*   [【最強AI】LuckyJの牌譜をガチで検討します。vol.1 - YouTube](https://www.youtube.com/live/ylm1Is9r3lU?si=1RcMjNMHVtYhyHsi)
-*   [【45000人＆3周年記念】LuckyJの牌譜をガチ検討します。【最強AI】vol.2 - YouTube](https://www.youtube.com/live/CYdi3La5Q0o?si=OTJEAIdjUwWGRoHx)
-*   [【最強AI】LuckyJの牌譜をガチ検討します。vol.3 - YouTube](https://www.youtube.com/live/-_6_Qphh1tc?si=IdsqXiOxB36nW3sj)
-*   [【最強AI】のラス牌譜から弱点を探します。LuckyJ牌譜検討vol.4！ - YouTube](https://www.youtube.com/live/lPcSnFggK3A?si=I1GfUTJrvRMhzjXg)
+- [天鳳位間近の最強AI【LuckyJ】をMリーグ観戦記者が丸裸にします。 - note](https://note.com/getawonarashite/n/n449ff8e33986?magazine_key=m5ac7ab04884e)
+- [ついに、人間は追い抜かれたのか。最強AI【LuckyJ】が見つめる先にあるものとは… - note](https://note.com/getawonarashite/n/nb93bc97ea0ac?magazine_key=m5ac7ab04884e)
+- [時代から取り残されないために… 最強AI【LuckyJ】から【超絶トイツテクニック】を盗め！ - note](https://note.com/getawonarashite/n/nd8c89f01d41e?magazine_key=m5ac7ab04884e)
+- [驚愕の打牌８連発！【最新AI】LuckyJ何切る問題集！vol.1 - note](https://note.com/getawonarashite/n/n8ba8d11e9eb6)
+- [【最強AI】LuckyJの牌譜をガチで検討します。vol.1 - YouTube](https://www.youtube.com/live/ylm1Is9r3lU?si=1RcMjNMHVtYhyHsi)
+- [【45000人＆3周年記念】LuckyJの牌譜をガチ検討します。【最強AI】vol.2 - YouTube](https://www.youtube.com/live/CYdi3La5Q0o?si=OTJEAIdjUwWGRoHx)
+- [【最強AI】LuckyJの牌譜をガチ検討します。vol.3 - YouTube](https://www.youtube.com/live/-_6_Qphh1tc?si=IdsqXiOxB36nW3sj)
+- [【最強AI】のラス牌譜から弱点を探します。LuckyJ牌譜検討vol.4！ - YouTube](https://www.youtube.com/live/lPcSnFggK3A?si=I1GfUTJrvRMhzjXg)
 
 #### お知らせ本（以下アソシエイトリンク）
 
-*   [世界最強麻雀AI Suphxの衝撃 (マイナビ麻雀BOOKS) - Amazon](https://amzn.to/3r0k3Fe)：お知らせさんのSuphx本、第１弾。
-*   [世界最強麻雀AI Suphxの決断 (マイナビ麻雀BOOKS) - Amazon](https://amzn.to/44wd44s)：お知らせさんのSuphx本、第２弾。改良されたSuphxの牌譜を元にしている。
+- [世界最強麻雀AI Suphxの衝撃 (マイナビ麻雀BOOKS) - Amazon](https://amzn.to/3r0k3Fe)：お知らせさんのSuphx本、第１弾。
+- [世界最強麻雀AI Suphxの決断 (マイナビ麻雀BOOKS) - Amazon](https://amzn.to/44wd44s)：お知らせさんのSuphx本、第２弾。改良されたSuphxの牌譜を元にしている。
 
 ２冊ともKindle Unlimitedの対象です。他にも麻雀本はKindle Unlimitedの対象になっているものは多いです。[Kindle Unlimitedの登録はこちらから](https://www.amazon.co.jp/kindle-dbs/hz/signup?tag=kbkn08-22)
 
@@ -440,8 +453,8 @@ Lucky JやSuphxから学びたい！という方は多いでしょう。しか�
 
 ### 雀士向けのAI解説情報
 
-*   [NAGA解析 VS Suphx ～麻雀に正解はあるのか～ - note](https://note.com/chiarittsu/n/n49f969b87ce5)：NAGAとSuphxの打牌選択の違いについて、Suphxの牌譜をNAGA解析にかけることで考察している。この記事はNAGA解析サービス初期のもので、おそらくv1.0-ω（10段到達時点のモデル）による解析と思われる。
-*   [NAGA解析 VS Suphx Vol.2 ～ここがダメだよSuphx28選～ - note](https://note.com/chiarittsu/n/n8edcfee81572)
+- [NAGA解析 VS Suphx ～麻雀に正解はあるのか～ - note](https://note.com/chiarittsu/n/n49f969b87ce5)：NAGAとSuphxの打牌選択の違いについて、Suphxの牌譜をNAGA解析にかけることで考察している。この記事はNAGA解析サービス初期のもので、おそらくv1.0-ω（10段到達時点のモデル）による解析と思われる。
+- [NAGA解析 VS Suphx Vol.2 ～ここがダメだよSuphx28選～ - note](https://note.com/chiarittsu/n/n8edcfee81572)
 
 ### LuckyJ情報
 
@@ -449,23 +462,23 @@ LuckyJ開発元のテンセントAI Labの公式記事：
 
 <LinkCard url="https://mp.weixin.qq.com/s/yGH8rH05XvSFqWMl4VZWFw" />
 
-*   [麻雀AI「Lucky J」についてのテンセント公式記事の日本語訳](https://modern-jan.com/2023/09/06/luckyj_article_ja/)：上記記事の日本語訳。拙訳ですがよければ。
-*   [多人数不完全情報ゲームにおけるAI ~ポーカーと麻雀を例として~ | SlideShare](https://www.slideshare.net/slideshow/embed_code/key/6CRqIsNdKUwdLR)：ゲーム理論と不完全情報ゲームの関係性、なぜ3人以上のナッシュ均衡を求めるのが難しいのか、などについてはこちらの資料がわかりやすい。
-*   [Actor-Critic Policy Optimization in a Large-Scale Imperfect-Information Game](https://openreview.net/forum?id=DTXZqTNV5nW)：Lucky Jの開発陣が先んじて1対1麻雀でアルゴリズムの研究を行った論文。
+- [麻雀AI「Lucky J」についてのテンセント公式記事の日本語訳](https://modern-jan.com/2023/09/06/luckyj_article_ja/)：上記記事の日本語訳。拙訳ですがよければ。
+- [多人数不完全情報ゲームにおけるAI ~ポーカーと麻雀を例として~ | SlideShare](https://www.slideshare.net/slideshow/embed_code/key/6CRqIsNdKUwdLR)：ゲーム理論と不完全情報ゲームの関係性、なぜ3人以上のナッシュ均衡を求めるのが難しいのか、などについてはこちらの資料がわかりやすい。
+- [Actor-Critic Policy Optimization in a Large-Scale Imperfect-Information Game](https://openreview.net/forum?id=DTXZqTNV5nW)：Lucky Jの開発陣が先んじて1対1麻雀でアルゴリズムの研究を行った論文。
 
 ### NAGA情報
 
-*   [深層学習麻雀AI「NAGA」 - DWANGO MEDIA VILLAGE](https://dmv.nico/ja/articles/mahjong_ai_naga/)：NAGAの8段到達時点でリリースされたDWANGO公式の解説記事。
-*   [麻雀AI「NAGA」](https://naga.dmv.nico/naga_report/top/)：NAGA解析サービスはこちら。
-*   [麻雀AI NAGA(ナーガ) 特南十段 - Twitter](https://twitter.com/NAGA025)：NAGAの最新情報はこちらから。
+- [深層学習麻雀AI「NAGA」 - DWANGO MEDIA VILLAGE](https://dmv.nico/ja/articles/mahjong_ai_naga/)：NAGAの8段到達時点でリリースされたDWANGO公式の解説記事。
+- [麻雀AI「NAGA」](https://naga.dmv.nico/naga_report/top/)：NAGA解析サービスはこちら。
+- [麻雀AI NAGA(ナーガ) 特南十段 - Twitter](https://twitter.com/NAGA025)：NAGAの最新情報はこちらから。
 
 ### Suphx情報
 
-*   [麻雀 AI Microsoft Suphx が人間のトッププレイヤーに匹敵する成績を達成 - Microsoft news](https://news.microsoft.com/ja-jp/2019/08/29/190829-mahjong-ai-microsoft-suphx/)：麻雀AIの歴史を概観しつつSuphxの実績を解説している。
-*   [Microsoftの最強麻雀AI Suphx の論文ざっくり日本語訳（導入と概要まで） - Qiita](https://qiita.com/Intel0tw5727/items/e122197b5a2958a22b34)：エンジニア向けにSuphx論文を解説している。Suphxの中身について詳しく知りたい方におすすめ。
-*   [Suphx論文を読んだ感想など - tomohxxの日記](https://tomohxx.hatenablog.com/entry/2020/04/25/230415)：恐らく現役エンジニアの方がまとめた論文の解説と感想がまとまっている。機械学習の知識がないと読むのは難しいが、論文を読むのはだるい、ぐらいの気持ちの人におすすめの記事。
-*   [Suphx: Mastering Mahjong with Deep Reinforcement Learning - arxiv](https://arxiv.org/abs/2003.13590)：Suphxの論文。専門家の方はこちらをあたって欲しい。
+- [麻雀 AI Microsoft Suphx が人間のトッププレイヤーに匹敵する成績を達成 - Microsoft news](https://news.microsoft.com/ja-jp/2019/08/29/190829-mahjong-ai-microsoft-suphx/)：麻雀AIの歴史を概観しつつSuphxの実績を解説している。
+- [Microsoftの最強麻雀AI Suphx の論文ざっくり日本語訳（導入と概要まで） - Qiita](https://qiita.com/Intel0tw5727/items/e122197b5a2958a22b34)：エンジニア向けにSuphx論文を解説している。Suphxの中身について詳しく知りたい方におすすめ。
+- [Suphx論文を読んだ感想など - tomohxxの日記](https://tomohxx.hatenablog.com/entry/2020/04/25/230415)：恐らく現役エンジニアの方がまとめた論文の解説と感想がまとまっている。機械学習の知識がないと読むのは難しいが、論文を読むのはだるい、ぐらいの気持ちの人におすすめの記事。
+- [Suphx: Mastering Mahjong with Deep Reinforcement Learning - arxiv](https://arxiv.org/abs/2003.13590)：Suphxの論文。専門家の方はこちらをあたって欲しい。
 
 ### その他
 
-*   [麻雀の扉](https://t.co/2GrXgwE4yg)：元のサイトは消滅していて、今は魚拓と呼ばれるアーカイブが残っている。園田賢プロや平澤元気さん、その他ネット麻雀有名人やプロなどファンが多いらしいサイト。神様のキューブという単語はここから拝借した。
+- [麻雀の扉](https://t.co/2GrXgwE4yg)：元のサイトは消滅していて、今は魚拓と呼ばれるアーカイブが残っている。園田賢プロや平澤元気さん、その他ネット麻雀有名人やプロなどファンが多いらしいサイト。神様のキューブという単語はここから拝借した。

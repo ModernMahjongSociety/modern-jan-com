@@ -172,7 +172,29 @@ const breadcrumbItems = [
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    margin: 24px 0;
+    margin: 24px auto;
+    display: block;
+  }
+
+  /* プリセットサイズの定義 */
+  .content :global(img[data-size="small"]:not(.mj-tile)) {
+    max-width: 50%;
+  }
+
+  .content :global(img[data-size="medium"]:not(.mj-tile)) {
+    max-width: 75%;
+  }
+
+  .content :global(img[data-size="large"]:not(.mj-tile)) {
+    max-width: 100%;
+  }
+
+  /* モバイルでのレスポンシブ対応 */
+  @media (max-width: 768px) {
+    .content :global(img[data-size="small"]),
+    .content :global(img[data-size="medium"]) {
+      max-width: 100%;
+    }
   }
 
   .content :global(pre) {
