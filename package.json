@@ -22,7 +22,6 @@
     "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/sitemap": "^3.7.0",
-    "@fontsource/noto-sans-jp": "^5.2.9",
     "@resvg/resvg-js": "^2.6.2",
     "@types/mdast": "^4.0.4",
     "astro": "^5.16.10",

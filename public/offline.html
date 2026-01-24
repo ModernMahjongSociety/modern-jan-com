@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>オフライン | モダンジャン研究会</title>
+  <style>
+    :root {
+      --color-primary: #14274E;
+      --color-text-primary: #1e293b;
+      --color-bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP',
+                   'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+      color: var(--color-text-primary);
+      background-color: var(--color-bg);
+      line-height: 1.8;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .offline-container {
+      max-width: 500px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      color: var(--color-primary);
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 32px;
+      background: var(--color-primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: opacity 0.2s ease;
+    }
+
+    .button:hover {
+      opacity: 0.9;
+    }
+
+    .offline-icon {
+      font-size: 4rem;
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-container">
+    <div class="offline-icon">📡</div>
+    <h1>オフラインです</h1>
+    <p>
+      インターネット接続が利用できません。<br>
+      接続を確認して、再度お試しください。
+    </p>
+    <a href="/" class="button" onclick="location.reload(); return false;">
+      再読み込み
+    </a>
+  </div>
+</body>
+</html>
