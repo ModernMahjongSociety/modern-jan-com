@@ -1,7 +1,7 @@
 // Service Worker for モダンジャン研究会
 // Cloudflare Workers と混同しないこと: これはブラウザ側のService Worker
 
-const CACHE_VERSION = 'modern-jan-v1';
+const CACHE_VERSION = 'modern-jan-v2';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const IMAGE_CACHE = `${CACHE_VERSION}-images`;
@@ -60,27 +60,43 @@ self.addEventListener('activate', (event) => {
   return self.clients.claim();
 });
 
+// 許可するオリジンのホワイトリスト
+const ALLOWED_ORIGINS = [
+  self.location.origin,
+  'https://r2.modern-jan.com',
+];
+
 // フェッチイベント: キャッシュ戦略
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // 同一オリジンのリクエストのみ処理
-  if (url.origin !== location.origin && !url.origin.includes('r2.modern-jan.com')) {
+  // ホワイトリストにあるオリジンのみ処理（サードパーティを完全にブロック）
+  if (!ALLOWED_ORIGINS.includes(url.origin)) {
+    return;
+  }
+
+  // クレデンシャル（Cookie）を含むリクエストはキャッシュしない
+  if (request.credentials === 'include') {
     return;
   }
 
   // 画像のキャッシュ戦略（Cache First）
-  if (request.destination === 'image' || url.origin.includes('r2.modern-jan.com')) {
+  if (request.destination === 'image' || url.origin === 'https://r2.modern-jan.com') {
     event.respondWith(
       caches.match(request).then((cachedResponse) => {
         if (cachedResponse) {
           return cachedResponse;
         }
 
-        return fetch(request).then((response) => {
-          // 成功したレスポンスのみキャッシュ
+        return fetch(request, { credentials: 'omit' }).then((response) => {
+          // 成功したレスポンス、かつCookieを含まないもののみキャッシュ
           if (!response || response.status !== 200 || response.type === 'error') {
+            return response;
+          }
+
+          // Set-Cookieヘッダーがある場合はキャッシュしない
+          if (response.headers.has('Set-Cookie')) {
             return response;
           }
 
@@ -106,8 +122,13 @@ self.addEventListener('fetch', (event) => {
           return cachedResponse;
         }
 
-        return fetch(request).then((response) => {
+        return fetch(request, { credentials: 'omit' }).then((response) => {
           if (!response || response.status !== 200) {
+            return response;
+          }
+
+          // Set-Cookieヘッダーがある場合はキャッシュしない
+          if (response.headers.has('Set-Cookie')) {
             return response;
           }
 
@@ -126,12 +147,15 @@ self.addEventListener('fetch', (event) => {
   // HTMLページのキャッシュ戦略（Network First）
   if (request.mode === 'navigate' || request.destination === 'document') {
     event.respondWith(
-      fetch(request)
+      fetch(request, { credentials: 'same-origin' })
         .then((response) => {
-          const responseToCache = response.clone();
-          caches.open(DYNAMIC_CACHE).then((cache) => {
-            cache.put(request, responseToCache);
-          });
+          // 正常なレスポンスのみキャッシュ
+          if (response && response.status === 200) {
+            const responseToCache = response.clone();
+            caches.open(DYNAMIC_CACHE).then((cache) => {
+              cache.put(request, responseToCache);
+            });
+          }
           return response;
         })
         .catch(() => {
