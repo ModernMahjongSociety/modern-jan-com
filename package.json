@@ -21,6 +21,7 @@
     "@astro-community/astro-embed-youtube": "^0.5.10",
     "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/mdx": "^4.3.13",
+    "@astrojs/rss": "^4.0.17",
     "@astrojs/sitemap": "^3.7.0",
     "@resvg/resvg-js": "^2.6.2",
     "@types/mdast": "^4.0.4",

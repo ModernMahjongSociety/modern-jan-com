@@ -1,0 +1,21 @@
+---
+interface Props {
+  items: { label: string; href: string }[];
+}
+
+const { items } = Astro.props;
+const siteUrl = 'https://modern-jan.com';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": items.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.label,
+    ...(item.href && { "item": `${siteUrl}${item.href}` }),
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

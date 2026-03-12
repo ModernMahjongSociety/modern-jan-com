@@ -56,6 +56,30 @@ body {
   font-weight: 400;
 }
 
+/* スキップリンク */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: var(--color-primary);
+  color: white;
+  padding: 8px 16px;
+  z-index: 1000;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+  color: white;
+}
+
+/* フォーカスインジケーター */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 /* リンク */
 a {
   color: var(--color-accent);

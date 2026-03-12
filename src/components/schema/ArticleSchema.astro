@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  publishedAt: Date;
+  updatedAt?: Date;
+  tags: string[];
+  image: string;
+  url: string;
+}
+
+const { title, description, publishedAt, updatedAt, tags, image, url } = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description || "麻雀の戦術・技術について研究するサークル",
+  "image": image,
+  "datePublished": publishedAt.toISOString(),
+  ...(updatedAt && { "dateModified": updatedAt.toISOString() }),
+  "url": url,
+  "inLanguage": "ja",
+  "author": {
+    "@type": "Organization",
+    "name": "モダンジャン研究会",
+    "url": "https://modern-jan.com",
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "モダンジャン研究会",
+    "url": "https://modern-jan.com",
+  },
+  ...(tags.length > 0 && { "keywords": tags.join(", ") }),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

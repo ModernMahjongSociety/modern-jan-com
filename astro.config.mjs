@@ -12,6 +12,7 @@ import { remarkImageSize } from './src/lib/remark-image-size';
 export default defineConfig({
   site: 'https://modern-jan.com',
   output: 'static',
+  trailingSlash: 'always',
   adapter: cloudflare({
     routes: {
       extend: {

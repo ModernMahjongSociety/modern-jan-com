@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="ページが見つかりません" description="お探しのページは見つかりませんでした。">
+  <Header />
+  <main id="main-content">
+    <div class="not-found">
+      <h1>404</h1>
+      <p class="message">お探しのページは見つかりませんでした。</p>
+      <p class="description">
+        URLが正しいかご確認ください。<br />
+        旧サイト（WordPress）のURLからお越しの場合、記事が移動している可能性があります。
+      </p>
+      <div class="actions">
+        <a href="/" class="button primary">トップページへ</a>
+        <a href="/blog/" class="button secondary">記事一覧へ</a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .not-found {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 6rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .message {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 16px;
+  }
+
+  .description {
+    color: var(--color-text-secondary);
+    margin-bottom: 32px;
+    line-height: 1.8;
+  }
+
+  .actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .button {
+    padding: 12px 32px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .button.primary {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .button.primary:hover {
+    opacity: 0.9;
+    color: white;
+  }
+
+  .button.secondary {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+  }
+
+  .button.secondary:hover {
+    background: var(--color-bg-tertiary);
+  }
+
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 4rem;
+    }
+
+    .message {
+      font-size: 1.25rem;
+    }
+
+    .actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .button {
+      width: 100%;
+      max-width: 250px;
+      text-align: center;
+    }
+  }
+</style>
