@@ -39,6 +39,7 @@ const canonicalUrl = Astro.url.href;
   <meta property="og:type" content={ogType} />
   <meta property="og:site_name" content={siteTitle} />
   <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:locale" content="ja_JP" />
   {ogType === 'article' && publishedAt && (
     <meta property="article:published_time" content={publishedAt.toISOString()} />
   )}
