@@ -16,7 +16,7 @@ const currentPath = Astro.url.pathname;
       モダンジャン研究会
     </a>
 
-    <button class="menu-toggle" aria-label="メニューを開く">
+    <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false">
       <span class="hamburger"></span>
       <span class="hamburger"></span>
       <span class="hamburger"></span>
@@ -41,9 +41,11 @@ const currentPath = Astro.url.pathname;
   const header = document.querySelector('.header');
 
   menuToggle?.addEventListener('click', () => {
-    nav?.classList.toggle('active');
+    const isOpen = nav?.classList.toggle('active');
     menuToggle?.classList.toggle('active');
     header?.classList.toggle('menu-open');
+    menuToggle?.setAttribute('aria-expanded', String(!!isOpen));
+    menuToggle?.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
   });
 
   // メニュー内のリンクをクリックしたらメニューを閉じる
@@ -52,6 +54,8 @@ const currentPath = Astro.url.pathname;
       nav?.classList.remove('active');
       menuToggle?.classList.remove('active');
       header?.classList.remove('menu-open');
+      menuToggle?.setAttribute('aria-expanded', 'false');
+      menuToggle?.setAttribute('aria-label', 'メニューを開く');
     });
   });
 </script>
