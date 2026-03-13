@@ -1,15 +1,17 @@
 ---
+const siteUrl = (import.meta.env.SITE || 'https://modern-jan.com').replace(/\/$/, '');
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "モダンジャン研究会",
-  "url": "https://modern-jan.com",
+  "url": siteUrl,
   "description": "麻雀の戦術・技術について研究するサークル",
   "inLanguage": "ja",
   "publisher": {
     "@type": "Organization",
     "name": "モダンジャン研究会",
-    "url": "https://modern-jan.com",
+    "url": siteUrl,
   },
 };
 ---

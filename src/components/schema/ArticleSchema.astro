@@ -10,6 +10,7 @@ interface Props {
 }
 
 const { title, description, publishedAt, updatedAt, tags, image, url } = Astro.props;
+const siteUrl = (import.meta.env.SITE || 'https://modern-jan.com').replace(/\/$/, '');
 
 const schema = {
   "@context": "https://schema.org",
@@ -18,21 +19,26 @@ const schema = {
   "description": description || "麻雀の戦術・技術について研究するサークル",
   "image": image,
   "datePublished": publishedAt.toISOString(),
-  ...(updatedAt && { "dateModified": updatedAt.toISOString() }),
+  ...(updatedAt ? { "dateModified": updatedAt.toISOString() } : {}),
   "url": url,
   "inLanguage": "ja",
   "author": {
     "@type": "Organization",
     "name": "モダンジャン研究会",
-    "url": "https://modern-jan.com",
+    "url": siteUrl,
   },
   "publisher": {
     "@type": "Organization",
     "name": "モダンジャン研究会",
-    "url": "https://modern-jan.com",
+    "url": siteUrl,
   },
-  ...(tags.length > 0 && { "keywords": tags.join(", ") }),
+  ...(tags.length > 0 ? { "keywords": tags.join(", ") } : {}),
 };
+
+const safeJsonLd = JSON.stringify(schema)
+  .replace(/</g, '\\u003c')
+  .replace(/>/g, '\\u003e')
+  .replace(/&/g, '\\u0026');
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<script type="application/ld+json" set:html={safeJsonLd} />

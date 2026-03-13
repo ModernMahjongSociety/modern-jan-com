@@ -9,9 +9,10 @@ interface Props {
   publishedAt?: Date;
   updatedAt?: Date;
   tags?: string[];
+  noindex?: boolean;
 }
 
-const { title, description, ogImage, ogType = 'website', publishedAt, updatedAt, tags } = Astro.props;
+const { title, description, ogImage, ogType = 'website', publishedAt, updatedAt, tags, noindex } = Astro.props;
 const siteTitle = 'モダンジャン研究会';
 const fullTitle = `${title} | ${siteTitle}`;
 
@@ -30,7 +31,11 @@ const canonicalUrl = Astro.url.href;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{fullTitle}</title>
   <meta name="description" content={descriptionContent} />
-  <link rel="canonical" href={canonicalUrl} />
+  {noindex ? (
+    <meta name="robots" content="noindex, nofollow" />
+  ) : (
+    <link rel="canonical" href={canonicalUrl} />
+  )}
 
   <!-- OGP -->
   <meta property="og:title" content={fullTitle} />

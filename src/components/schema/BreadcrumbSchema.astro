@@ -4,7 +4,7 @@ interface Props {
 }
 
 const { items } = Astro.props;
-const siteUrl = 'https://modern-jan.com';
+const siteUrl = (import.meta.env.SITE || 'https://modern-jan.com').replace(/\/$/, '');
 
 const schema = {
   "@context": "https://schema.org",
@@ -13,9 +13,14 @@ const schema = {
     "@type": "ListItem",
     "position": index + 1,
     "name": item.label,
-    ...(item.href && { "item": `${siteUrl}${item.href}` }),
+    ...(item.href ? { "item": new URL(item.href, siteUrl).toString() } : {}),
   })),
 };
+
+const safeJsonLd = JSON.stringify(schema)
+  .replace(/</g, '\\u003c')
+  .replace(/>/g, '\\u003e')
+  .replace(/&/g, '\\u0026');
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<script type="application/ld+json" set:html={safeJsonLd} />
