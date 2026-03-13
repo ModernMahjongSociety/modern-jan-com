@@ -1,5 +1,5 @@
 ---
-import { SITE_DESCRIPTION, getSiteUrl, getOrganization, toSafeJsonLd } from '../../lib/schema';
+import { SITE_DESCRIPTION, ORGANIZATION, toSafeJsonLd } from '../../lib/schema';
 
 interface Props {
   title: string;
@@ -12,8 +12,6 @@ interface Props {
 }
 
 const { title, description, publishedAt, updatedAt, tags, image, url } = Astro.props;
-const siteUrl = getSiteUrl();
-const organization = getOrganization(siteUrl);
 
 const schema = {
   "@context": "https://schema.org",
@@ -25,8 +23,8 @@ const schema = {
   ...(updatedAt && updatedAt > publishedAt ? { "dateModified": updatedAt.toISOString() } : {}),
   "url": url,
   "inLanguage": "ja",
-  "author": organization,
-  "publisher": organization,
+  "author": ORGANIZATION,
+  "publisher": ORGANIZATION,
   ...(tags.length > 0 ? { "keywords": tags.join(", ") } : {}),
 };
 

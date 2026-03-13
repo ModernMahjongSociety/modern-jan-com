@@ -1,12 +1,11 @@
 ---
-import { getSiteUrl, toSafeJsonLd } from '../../lib/schema';
+import { SITE_URL, toSafeJsonLd } from '../../lib/schema';
 
 interface Props {
   items: { label: string; href?: string }[];
 }
 
 const { items } = Astro.props;
-const siteUrl = getSiteUrl();
 
 const schema = {
   "@context": "https://schema.org",
@@ -15,7 +14,7 @@ const schema = {
     "@type": "ListItem",
     "position": index + 1,
     "name": item.label,
-    ...(item.href ? { "item": new URL(item.href, siteUrl).toString() } : {}),
+    ...(item.href ? { "item": new URL(item.href, SITE_URL).toString() } : {}),
   })),
 };
 
