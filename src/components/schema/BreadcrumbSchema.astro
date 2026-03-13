@@ -1,10 +1,12 @@
 ---
+import { getSiteUrl, toSafeJsonLd } from '../../lib/schema';
+
 interface Props {
-  items: { label: string; href: string }[];
+  items: { label: string; href?: string }[];
 }
 
 const { items } = Astro.props;
-const siteUrl = (import.meta.env.SITE || 'https://modern-jan.com').replace(/\/$/, '');
+const siteUrl = getSiteUrl();
 
 const schema = {
   "@context": "https://schema.org",
@@ -17,10 +19,7 @@ const schema = {
   })),
 };
 
-const safeJsonLd = JSON.stringify(schema)
-  .replace(/</g, '\\u003c')
-  .replace(/>/g, '\\u003e')
-  .replace(/&/g, '\\u0026');
+const safeJsonLd = toSafeJsonLd(schema);
 ---
 
 <script type="application/ld+json" set:html={safeJsonLd} />

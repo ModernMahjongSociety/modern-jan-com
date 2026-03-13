@@ -1,5 +1,7 @@
 ---
-const siteUrl = (import.meta.env.SITE || 'https://modern-jan.com').replace(/\/$/, '');
+import { getSiteUrl, toSafeJsonLd } from '../../lib/schema';
+
+const siteUrl = getSiteUrl();
 
 const schema = {
   "@context": "https://schema.org",
@@ -15,10 +17,7 @@ const schema = {
   },
 };
 
-const safeJsonLd = JSON.stringify(schema)
-  .replace(/</g, '\\u003c')
-  .replace(/>/g, '\\u003e')
-  .replace(/&/g, '\\u0026');
+const safeJsonLd = toSafeJsonLd(schema);
 ---
 
 <script type="application/ld+json" set:html={safeJsonLd} />
