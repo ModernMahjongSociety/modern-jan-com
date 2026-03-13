@@ -1,4 +1,6 @@
 ---
+// Cloudflare Workers上では public/_redirects が優先されるが、
+// devサーバーやフォールバック用に残している
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {

@@ -19,7 +19,7 @@ const schema = {
   "description": description || "麻雀の戦術・技術について研究するサークル",
   "image": image,
   "datePublished": publishedAt.toISOString(),
-  ...(updatedAt ? { "dateModified": updatedAt.toISOString() } : {}),
+  ...(updatedAt && updatedAt > publishedAt ? { "dateModified": updatedAt.toISOString() } : {}),
   "url": url,
   "inLanguage": "ja",
   "author": {
