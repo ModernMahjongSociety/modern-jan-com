@@ -6,6 +6,7 @@ import Footer from '../../components/Footer.astro';
 import PostCard from '../../components/PostCard.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import Sidebar from '../../components/Sidebar.astro';
+import BreadcrumbSchema from '../../components/schema/BreadcrumbSchema.astro';
 
 // 日付降順でソート
 const posts = (await getCollection('posts', ({ data }) => !data.draft))
@@ -18,8 +19,9 @@ const breadcrumbItems = [
 ---
 
 <BaseLayout title="記事一覧" description="モダンジャン研究会の全記事一覧">
+  <BreadcrumbSchema items={breadcrumbItems} />
   <Header />
-  <main>
+  <main id="main-content">
     <div class="container">
       <div class="blog-page">
         <Breadcrumb items={breadcrumbItems} />

@@ -1,0 +1,34 @@
+---
+import { SITE_DESCRIPTION, ORGANIZATION, toSafeJsonLd } from '../../lib/schema';
+
+interface Props {
+  title: string;
+  description?: string;
+  publishedAt: Date;
+  updatedAt?: Date;
+  tags: string[];
+  image: string;
+  url: string;
+}
+
+const { title, description, publishedAt, updatedAt, tags, image, url } = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description || SITE_DESCRIPTION,
+  "image": image,
+  "datePublished": publishedAt.toISOString(),
+  ...(updatedAt && updatedAt > publishedAt ? { "dateModified": updatedAt.toISOString() } : {}),
+  "url": url,
+  "inLanguage": "ja",
+  "author": ORGANIZATION,
+  "publisher": ORGANIZATION,
+  ...(tags.length > 0 ? { "keywords": tags.join(", ") } : {}),
+};
+
+const safeJsonLd = toSafeJsonLd(schema);
+---
+
+<script type="application/ld+json" set:html={safeJsonLd} />

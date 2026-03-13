@@ -1,0 +1,39 @@
+# モダンジャン研究会 (Modern Mahjong Society)
+
+> 麻雀の戦術・技術について研究するサークル
+
+## About
+
+モダンジャン研究会は、麻雀の戦術・技術について研究するサークルです。
+現代麻雀の戦術論や牌効率、AI麻雀の分析など、麻雀に関する技術的な記事を公開しています。
+
+Website: https://modern-jan.com
+
+## Content
+
+### Blog Articles
+- URL pattern: /blog/{slug}/
+- Topics: 牌効率（Tile Efficiency）、麻雀AI、戦術書レビュー、大会レポート、初心者向け講座
+- Language: Japanese (日本語)
+
+### Key Pages
+- /about/ - 団体概要
+- /blog/ - 記事一覧
+- /member/ - 会員紹介
+- /tutorial/ - 麻雀教則動画
+- /rule/ - ルール
+- /books/ - 麻雀戦術書
+- /kansen/ - 観戦記
+- /title/ - タイトル戦
+
+## Topics Covered
+
+- 牌効率 (Tile Efficiency) - リーチ判断、受入枚数の最大化
+- 麻雀AI分析 - Lucky J, NAGA, Suphx の比較・分析
+- 初心者向け動画講座 - 牌効率の基礎、実戦での応用
+- 大会・リーグ戦レポート - 雀王戦、リーグ戦の結果報告
+- 麻雀戦術書 - おすすめ書籍の紹介
+
+## Contact
+
+Website: https://modern-jan.com

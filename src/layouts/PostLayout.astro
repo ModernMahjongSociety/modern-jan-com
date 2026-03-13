@@ -7,6 +7,8 @@ import TagList from '../components/TagList.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import SocialShare from '../components/SocialShare.astro';
 import Sidebar from '../components/Sidebar.astro';
+import ArticleSchema from '../components/schema/ArticleSchema.astro';
+import BreadcrumbSchema from '../components/schema/BreadcrumbSchema.astro';
 
 interface Props {
   post: {
@@ -43,9 +45,23 @@ const breadcrumbItems = [
   title={title}
   description={description}
   ogImage={ogImageUrl}
+  ogType="article"
+  publishedAt={publishedAt}
+  updatedAt={updatedAt}
+  tags={tags}
 >
+  <ArticleSchema
+    title={title}
+    description={description}
+    publishedAt={publishedAt}
+    updatedAt={updatedAt}
+    tags={tags}
+    image={ogImageUrl}
+    url={Astro.url.href}
+  />
+  <BreadcrumbSchema items={breadcrumbItems} />
   <Header />
-  <main>
+  <main id="main-content">
     <div class="container">
       <article class="post">
         <Breadcrumb items={breadcrumbItems} />

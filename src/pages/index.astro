@@ -5,6 +5,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PostCard from '../components/PostCard.astro';
 import Sidebar from '../components/Sidebar.astro';
+import WebSiteSchema from '../components/schema/WebSiteSchema.astro';
 
 // 最新5件の記事を取得
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
@@ -14,8 +15,9 @@ const recentPosts = allPosts
 ---
 
 <BaseLayout title="ホーム" description="麻雀の戦術・技術について研究するサークル">
+  <WebSiteSchema />
   <Header />
-  <main>
+  <main id="main-content">
     <section class="hero">
       <div class="hero-inner">
         <h1 class="hero-title">モダンジャン研究会</h1>

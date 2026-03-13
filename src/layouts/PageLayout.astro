@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import Sidebar from '../components/Sidebar.astro';
+import BreadcrumbSchema from '../components/schema/BreadcrumbSchema.astro';
 
 interface Props {
   title: string;
@@ -22,8 +23,9 @@ const finalBreadcrumbItems = breadcrumbItems || defaultBreadcrumbItems;
 ---
 
 <BaseLayout title={title} description={description}>
+  <BreadcrumbSchema items={finalBreadcrumbItems} />
   <Header />
-  <main>
+  <main id="main-content">
     <div class="container">
       <article class="page">
         <Breadcrumb items={finalBreadcrumbItems} />

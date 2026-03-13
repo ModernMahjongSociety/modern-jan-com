@@ -1,0 +1,17 @@
+---
+import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, ORGANIZATION, toSafeJsonLd } from '../../lib/schema';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": SITE_NAME,
+  "url": SITE_URL,
+  "description": SITE_DESCRIPTION,
+  "inLanguage": "ja",
+  "publisher": ORGANIZATION,
+};
+
+const safeJsonLd = toSafeJsonLd(schema);
+---
+
+<script type="application/ld+json" set:html={safeJsonLd} />

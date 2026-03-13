@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://modern-jan.com/sitemap-index.xml
