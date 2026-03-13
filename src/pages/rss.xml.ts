@@ -1,6 +1,7 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { SITE_NAME, SITE_DESCRIPTION } from '../lib/schema';
 
 export async function GET(context: APIContext) {
   if (!context.site) {
@@ -11,8 +12,8 @@ export async function GET(context: APIContext) {
     .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 
   return rss({
-    title: 'モダンジャン研究会',
-    description: '麻雀の戦術・技術について研究するサークル',
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
     site: context.site,
     items: posts.map((post) => ({
       title: post.data.title,

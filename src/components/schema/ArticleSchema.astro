@@ -1,5 +1,5 @@
 ---
-import { getSiteUrl, toSafeJsonLd } from '../../lib/schema';
+import { SITE_DESCRIPTION, getSiteUrl, getOrganization, toSafeJsonLd } from '../../lib/schema';
 
 interface Props {
   title: string;
@@ -13,27 +13,20 @@ interface Props {
 
 const { title, description, publishedAt, updatedAt, tags, image, url } = Astro.props;
 const siteUrl = getSiteUrl();
+const organization = getOrganization(siteUrl);
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": title,
-  "description": description || "麻雀の戦術・技術について研究するサークル",
+  "description": description || SITE_DESCRIPTION,
   "image": image,
   "datePublished": publishedAt.toISOString(),
   ...(updatedAt && updatedAt > publishedAt ? { "dateModified": updatedAt.toISOString() } : {}),
   "url": url,
   "inLanguage": "ja",
-  "author": {
-    "@type": "Organization",
-    "name": "モダンジャン研究会",
-    "url": siteUrl,
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "モダンジャン研究会",
-    "url": siteUrl,
-  },
+  "author": organization,
+  "publisher": organization,
   ...(tags.length > 0 ? { "keywords": tags.join(", ") } : {}),
 };
 

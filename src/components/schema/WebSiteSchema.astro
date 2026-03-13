@@ -1,20 +1,16 @@
 ---
-import { getSiteUrl, toSafeJsonLd } from '../../lib/schema';
+import { SITE_NAME, SITE_DESCRIPTION, getSiteUrl, getOrganization, toSafeJsonLd } from '../../lib/schema';
 
 const siteUrl = getSiteUrl();
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "モダンジャン研究会",
+  "name": SITE_NAME,
   "url": siteUrl,
-  "description": "麻雀の戦術・技術について研究するサークル",
+  "description": SITE_DESCRIPTION,
   "inLanguage": "ja",
-  "publisher": {
-    "@type": "Organization",
-    "name": "モダンジャン研究会",
-    "url": siteUrl,
-  },
+  "publisher": getOrganization(siteUrl),
 };
 
 const safeJsonLd = toSafeJsonLd(schema);

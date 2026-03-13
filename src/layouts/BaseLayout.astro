@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { SITE_NAME, SITE_DESCRIPTION } from '../lib/schema';
 
 interface Props {
   title: string;
@@ -13,14 +14,13 @@ interface Props {
 }
 
 const { title, description, ogImage, ogType = 'website', publishedAt, updatedAt, tags, noindex } = Astro.props;
-const siteTitle = 'モダンジャン研究会';
-const fullTitle = `${title} | ${siteTitle}`;
+const fullTitle = `${title} | ${SITE_NAME}`;
 
 // デフォルトOGP画像（SSG生成）
 const defaultOgImage = `${Astro.site}ogp/default.png`;
 
 const ogImageUrl = ogImage || defaultOgImage;
-const descriptionContent = description || '麻雀の戦術・技術について研究するサークル';
+const descriptionContent = description || SITE_DESCRIPTION;
 const canonicalUrl = Astro.url.href;
 ---
 
@@ -42,13 +42,13 @@ const canonicalUrl = Astro.url.href;
   <meta property="og:description" content={descriptionContent} />
   <meta property="og:image" content={ogImageUrl} />
   <meta property="og:type" content={ogType} />
-  <meta property="og:site_name" content={siteTitle} />
+  <meta property="og:site_name" content={SITE_NAME} />
   <meta property="og:url" content={canonicalUrl} />
   <meta property="og:locale" content="ja_JP" />
   {ogType === 'article' && publishedAt && (
     <meta property="article:published_time" content={publishedAt.toISOString()} />
   )}
-  {ogType === 'article' && updatedAt && (
+  {ogType === 'article' && updatedAt && publishedAt && updatedAt > publishedAt && (
     <meta property="article:modified_time" content={updatedAt.toISOString()} />
   )}
   {ogType === 'article' && tags?.map(tag => (
@@ -63,7 +63,7 @@ const canonicalUrl = Astro.url.href;
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="sitemap" href="/sitemap-index.xml" />
-  <link rel="alternate" type="application/rss+xml" title="モダンジャン研究会" href="/rss.xml" />
+  <link rel="alternate" type="application/rss+xml" title={SITE_NAME} href="/rss.xml" />
 
   <!-- Preconnect to external domains for faster resource loading -->
   <link rel="preconnect" href="https://r2.modern-jan.com" crossorigin />
